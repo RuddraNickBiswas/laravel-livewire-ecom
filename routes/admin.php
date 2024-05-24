@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/dashboard', function(){
-    return view('admin.contents.auth.login');
-})->name('dashboard');
+
+Route::get('/dashboard',\App\Livewire\Admin\Dashboard\Page::class)->name('dashboard');
+
+Route::get('/test',App\Livewire\Admin\Test\Page::class)->name('test');
+

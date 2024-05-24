@@ -17,4 +17,6 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/admin/login', [AuthController::class, 'index'])->name('admin.login');
+Route::get('/admin/login', \App\Livewire\Admin\Auth\Login::class)
+->middleware('guest')
+->name('admin.login');
