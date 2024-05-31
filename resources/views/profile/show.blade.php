@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('layouts.admin.normal-main')
 
 @php
 $breadcrumbs = [['link' => 'home', 'name' => 'Home'], ['link' => 'javascript:void(0)', 'name' => 'User'], ['name' => 'Profile']];
