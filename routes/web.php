@@ -7,6 +7,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/trigger-event', function () {
+    broadcast(new \App\Events\ExampleEvent());
+    return 'Event has been broadcast!';
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

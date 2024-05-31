@@ -128,6 +128,7 @@
                 <div data-i18n="Support">Support</div>
             </a>
         </li>
+
         <li class="menu-item">
             <a wire:navigate href="{{ route('admin.dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-lifebuoy"></i>
