@@ -10,16 +10,17 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ExampleEvent  implements ShouldBroadcast
+class Example implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct()
-    {
-        //
+    public function __construct(
+        public ?string         $status = null
+    ) {
+        $this->status = $status;
     }
 
     /**
@@ -30,7 +31,7 @@ class ExampleEvent  implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('tests'),
+            new Channel('asd'),
         ];
     }
 }

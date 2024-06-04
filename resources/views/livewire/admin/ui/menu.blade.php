@@ -48,7 +48,7 @@
             <a href="javascript:void(0);"
                 class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                <div data-i18n="Dashboards">Dashboards</div>
+                <div data-i18n="{{ $name }}">{{ $name }}</div>
                 <div class="badge bg-primary rounded-pill ms-auto">5</div>
             </a>
             <ul class="menu-sub">
@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="dashboards-crm.html"
+                    <a wire:navigate href="{{ route('admin.test') }}"
                         class="menu-link">
                         <div data-i18n="CRM">CRM</div>
                     </a>
@@ -184,21 +184,21 @@
             <span class="menu-header-text"
                 data-i18n="Misc">Misc</span>
         </li>
-        <li class="menu-item {{ setActive(['admin.test']) }} ">
+        <li  class="menu-item  {{ $name === 'test' ? 'active' : '' }}">
             <a wire:navigate
                 href="{{ route('admin.test') }}"
                 class="menu-link">
                 <i class="menu-icon tf-icons ti ti-lifebuoy"></i>
-                <div data-i18n="Support">Support</div>
+                <div data-i18n="Test">Test</div>
             </a>
         </li>
 
-        <li class="menu-item {{ setActive(['admin.dashboard']) }}">
+        <li class="menu-item {{ $name === 'dashboard' ? 'active' : '' }}">
             <a wire:navigate
                 href="{{ route('admin.dashboard') }}"
                 class="menu-link">
                 <i class="menu-icon tf-icons ti ti-lifebuoy"></i>
-                <div data-i18n="Support">Support</div>
+                <div data-i18n="Dashboard">Dashboard</div>
             </a>
         </li>
         <li class="menu-item">
@@ -211,3 +211,10 @@
         </li>
     </ul>
 </aside>
+@script
+<script>
+    $wire.on('routeChanged', () => {
+      console.log('hi')
+    });
+</script>
+@endscript

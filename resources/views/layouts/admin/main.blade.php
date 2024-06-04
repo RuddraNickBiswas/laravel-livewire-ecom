@@ -17,6 +17,7 @@ lang="en"
 
     <meta name="description" content="" />
 
+    @vite(['resources/js/app.js'])
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('admin/assets/img/favicon/favicon.ico') }}" />
 
@@ -55,7 +56,6 @@ lang="en"
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ asset('admin/assets/vendor/css/pages/cards-advance.css') }}" />
 
-    @vite(['resources/js/app.js'])
 
     <!-- Scripts -->
 
@@ -82,9 +82,12 @@ lang="en"
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
             <!-- Menu -->
+
             @persist('menu')
-            <x-admin.layouts.menu.menu-vertical />
+            {{-- <x-admin.layouts.menu.menu-vertical /> --}}
+            <livewire:admin.ui.menu @routeChanged="$refresh"/>
             @endpersist
+
 
             <!-- / Menu -->
 
@@ -98,6 +101,7 @@ lang="en"
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
+
                     <!-- Content -->
                     <div class="container-xxl flex-grow-1 container-p-y">
                         {{ $slot }}

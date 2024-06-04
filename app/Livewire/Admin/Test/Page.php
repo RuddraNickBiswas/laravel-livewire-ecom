@@ -9,7 +9,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
-#[Layout('layouts.admin.main')]
+#[Layout('layouts.admin.main', ['activeRoute' => 'page'])]
 class Page extends Component
 {
 
@@ -25,13 +25,14 @@ class Page extends Component
 
     public function mount()
     {
+        $this->dispatch('routeChanged', 'test');
         $this->tests = Test::orderBy('created_at', 'desc')
         ->take(1)
         ->get();
     }
-    #[On('echo:tests, example')]
-    public function exampleBroadcast(){
-        dd('bcsd');
+    #[On('echo:asd,Example')]
+    public function exampleBroadcast($data){
+        dd($data);
     }
 
     public function save(){
