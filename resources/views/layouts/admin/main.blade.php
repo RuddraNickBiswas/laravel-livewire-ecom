@@ -1,171 +1,186 @@
-<!doctype html>
+<!DOCTYPE html>
 
-<html
-lang="en"
-  class="light-style layout-navbar-fixed layout-menu-fixed layout-compact"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="{{ asset('admin/assets/') }}/"
-  data-template="vertical-menu-template-no-customizer">
+<html lang="en">
+<!--begin::Head-->
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-
+    <base href="" />
     <title>{{ $title ?? 'Page Title' }}</title>
-
-    <meta name="description" content="" />
-
-    @vite(['resources/js/app.js'])
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('admin/assets/img/favicon/favicon.ico') }}" />
-
-    {{-- <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&ampdisplay=swap"
-        rel="stylesheet" /> --}}
-
-    <!-- Icons -->
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/fonts/fontawesome.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/fonts/tabler-icons.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/fonts/flag-icons.css') }}" />
-
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/css/rtl/core.css') }}"
-        class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/css/rtl/theme-default.css') }}"
-        class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/css/demo.css') }}" />
-
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/libs/node-waves/node-waves.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/libs/typeahead-js/typeahead.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/libs/swiper/swiper.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" />
+    <meta charset="utf-8" />
+    <meta name="description"
+        content="
+         meta description
+        " />
+    <meta name="keywords"content="meta keywords " />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1" />
+    <meta property="og:locale"
+        content="en_US" />
+    <link rel="shortcut icon"
+        href="{{ asset('admin/assets/media/logos/favicon.ico') }}" />
+    <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet"
-        href="{{ asset('admin/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
-    <link rel="stylesheet"
-        href="{{ asset('admin/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" />
-
-
-    <!-- Page CSS -->
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/css/pages/cards-advance.css') }}" />
-
-
-    <!-- Scripts -->
-
-    <!-- Helpers -->
-    <script src="{{ asset('admin/assets/vendor/js/helpers.js') }}" data-navigate-track></script>
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
-     {{-- <script src="{{ asset('admin/assets/vendor/js/template-customizer.js') }}" data-navigate-once></script>  --}}
-
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    {{-- PROBLEM     --}}
-    <script src="{{ asset('admin/assets/js/config.js') }}" data-navigate-track></script>
-
-
-
+        href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Vendor Stylesheets(used for this page only)-->
+    <link href="{{ asset('admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}"
+        rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('admin/assets/plugins/custom/datatables/datatables.bundle.css') }}"
+        rel="stylesheet"
+        type="text/css" />
+    <!--end::Vendor Stylesheets-->
+    <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+    <link href="{{ asset('admin/assets/plugins/global/plugins.bundle.css') }}"
+        rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('admin/assets/css/style.bundle.css') }}"
+        rel="stylesheet"
+        type="text/css" />
 
     <!-- Styles -->
     @stack('styles')
     @livewireStyles
+    <!--end::Global Stylesheets Bundle-->
+    @vite(['resources/js/app.js'])
+    <script data-navigate-track>
+        // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking)
+        if (window.top != window.self) {
+            window.top.location.replace(window.self.location.href);
+        }
+    </script>
 </head>
+<!--end::Head-->
+<!--begin::Body-->
 
-<body>
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
-        <div class="layout-container">
-            <!-- Menu -->
+<body id="kt_app_body"
+    data-kt-app-header-fixed="true"
+    data-kt-app-header-fixed-mobile="true"
+    data-kt-app-sidebar-enabled="true"
+    data-kt-app-sidebar-fixed="true"
+    data-kt-app-sidebar-hoverable="true"
+    data-kt-app-sidebar-push-toolbar="true"
+    data-kt-app-sidebar-push-footer="true"
+    data-kt-app-aside-enabled="true"
+    data-kt-app-aside-fixed="true"
+    data-kt-app-aside-push-toolbar="true"
+    data-kt-app-aside-push-footer="true"
+    class="app-default">
+    <x-admin.partials.theme-mode.init />
 
-            @persist('menu')
-            {{-- <x-admin.layouts.menu.menu-vertical /> --}}
-            <livewire:admin.ui.menu @routeChanged="$refresh"/>
-            @endpersist
+
+    <!--CONTENT -->
+    <!--begin::App-->
+    <div class="d-flex flex-column flex-root app-root"
+        id="kt_app_root">
+        <!--begin::Page-->
+        <div class="app-page  flex-column flex-column-fluid "
+            id="kt_app_page">
+            <x-admin.layout.partials.header />
+
+            <!--begin::Wrapper-->
+            <div class="app-wrapper  flex-column flex-row-fluid "
+                id="kt_app_wrapper">
+
+                <x-admin.layout.partials.sidebar />
+
+                <!--begin::Main-->
+                <div class="app-main flex-column flex-row-fluid "
+                    id="kt_app_main">
+                    <!--begin::Content wrapper-->
+                    <div class="d-flex flex-column flex-column-fluid">
+
+                        <!--begin::Content-->
+                        <div id="kt_app_content"
+                            class="app-content  flex-column-fluid ">
+                            <!--begin::Content container-->
+                            <div id="kt_app_content_container"
+                                class="app-container  container-fluid ">
+                                {{ $slot }}
+                            </div>
+                            <!--end::Content container-->
+                        </div>
+                        <!--end::Content-->
 
 
-            <!-- / Menu -->
-
-            <!-- Layout container -->
-            <div class="layout-page">
-                <!-- Navbar -->
-                @persist('nav')
-                <x-admin.layouts.navbar.nav-vertical />
-                @endpersist
-                <!-- / Navbar -->
-
-                <!-- Content wrapper -->
-                <div class="content-wrapper">
-
-                    <!-- Content -->
-                    <div class="container-xxl flex-grow-1 container-p-y">
-                        {{ $slot }}
                     </div>
-                    <!-- / Content -->
+                    <!--end::Content wrapper-->
+                    <x-admin.layout.partials.footer />
 
-                    <!-- Footer -->
-                    @persist('footer')
-                   <x-admin.layouts.footer />
-                    @endpersist
-                    <!-- / Footer -->
-
-                    <div class="content-backdrop fade"></div>
                 </div>
-                <!-- Content wrapper -->
+                <!--end:::Main-->
+
+                <x-admin.layout.partials.aside />
+
             </div>
-            <!-- / Layout page -->
+            <!--end::Wrapper-->
         </div>
-
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
-
-        <!-- Drag Target Area To SlideIn Menu On Small Screens -->
-        <div class="drag-target"></div>
+        <!--end::Page-->
     </div>
-    <!-- / Layout wrapper -->
+    <!--end::App-->
+    <x-admin.partials.drawers />
+
+
+    <!--ENDCONTENT -->
+
+
+    <x-admin.partials.scrolltop />
+    <!--layout-partial:partials/_scrolltop.html-->
+    <!--begin::Modals-->
 
 
 
 
+    {{-- <x-admin.partials.modals.upgrade-plan />
+    <x-admin.partials.modals.view-users />
+    <x-admin.partials.modals.users-search.main />
+    <x-admin.partials.modals.invite-friends /> --}}
 
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
 
-    <script src="{{ asset('admin/assets/vendor/libs/jquery/jquery.js') }}" data-navigate-once></script>
-    <script src="{{ asset('admin/assets/vendor/libs/popper/popper.js') }}" data-navigate-once></script>
-    <script src="{{ asset('admin/assets/vendor/js/bootstrap.js') }}" data-navigate-once></script>
-    <script src="{{ asset('admin/assets/vendor/libs/node-waves/node-waves.js') }}" data-navigate-once></script>
-    <script src="{{ asset('admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}" data-navigate-once>
+    <!--end::Modals-->
+    <!--begin::Javascript-->
+    <script data-navigate-track>
+        var hostUrl = "{{ asset('admin/assets/') }}/";
     </script>
-    <script src="{{ asset('admin/assets/vendor/libs/hammer/hammer.js') }}" data-navigate-once></script>
-    <script src="{{ asset('admin/assets/vendor/libs/i18n/i18n.js') }}" data-navigate-once></script>
-    <script src="{{ asset('admin/assets/vendor/libs/typeahead-js/typeahead.js') }}" data-navigate-once></script>
-    <script src="{{ asset('admin/assets/vendor/js/menu.js') }}" data-navigate-once></script>
+    <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+    <script src="{{ asset('admin/assets/plugins/global/plugins.bundle.js') }}"
+        data-navigate-once></script>
+    <script src="{{ asset('admin/assets/js/scripts.bundle.js') }}"
+        data-navigate-once></script>
+    <!--end::Global Javascript Bundle-->
 
-    <!-- endbuild -->
+    {{-- <!--begin::Vendors Javascript(used for this page only)-->
+    <script src="{{ asset('admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
+    <script src="{{ asset('admin/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <!--end::Vendors Javascript-->
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('admin/assets/js/widgets.bundle.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/custom/widgets.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/custom/apps/chat/chat.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/custom/utilities/modals/users-search.js') }}"></script>
+    <!--end::Custom Javascript--> --}}
 
-    <!-- Vendors JS -->
-    <script src="{{ asset('admin/assets/vendor/libs/apex-charts/apexcharts.js') }}" data-navigate-once></script>
-    <script src="{{ asset('admin/assets/vendor/libs/swiper/swiper.js') }}" data-navigate-once></script>
-    <script src="{{ asset('admin/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}" data-navigate-once>
+    <!--end::Javascript-->
+
+    <script data-navigate-track>
+
     </script>
-
-
-
-    <!-- Main JS -->
-    <script src="{{ asset('admin/assets/js/main.js') }}"></script>
-
-
-    <script src="{{ asset('js/modal.min.js') }}" data-navigate-track></script>
-
 
     @livewireScripts
     @stack('scripts')
 </body>
+<!--end::Body-->
 
 </html>
