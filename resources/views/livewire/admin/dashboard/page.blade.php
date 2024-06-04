@@ -1,11 +1,7 @@
 <div>
 
-
-    <x-admin.dashboard.index/>
+    <button class="btn btn-primary">Hi button</button>
 </div>
 
 
 
-@push("scripts")
-<script src="{{ asset('admin/assets/js/dashboards-analytics.js') }}"></script>
-@endpush
