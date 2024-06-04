@@ -1,11 +1,11 @@
 <!doctype html>
 
-<html 
+<html
 lang="en"
   class="light-style layout-navbar-fixed layout-menu-fixed layout-compact"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="{{ asset('admin/assets/') }}/" 
+  data-assets-path="{{ asset('admin/assets/') }}/"
   data-template="vertical-menu-template-no-customizer">
 
 <head>
@@ -17,15 +17,16 @@ lang="en"
 
     <meta name="description" content="" />
 
+    @vite(['resources/js/app.js'])
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('admin/assets/img/favicon/favicon.ico') }}" />
 
-    <!-- Fonts -->
+    {{-- <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&ampdisplay=swap"
-        rel="stylesheet" />
+        rel="stylesheet" /> --}}
 
     <!-- Icons -->
     <link rel="stylesheet" href="{{ asset('admin/assets/vendor/fonts/fontawesome.css') }}" />
@@ -52,11 +53,9 @@ lang="en"
         href="{{ asset('admin/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" />
 
 
-
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ asset('admin/assets/vendor/css/pages/cards-advance.css') }}" />
 
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
     <!-- Scripts -->
 
@@ -83,9 +82,12 @@ lang="en"
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
             <!-- Menu -->
+
             @persist('menu')
-            <x-admin.layouts.menu.menu-vertical />
+            {{-- <x-admin.layouts.menu.menu-vertical /> --}}
+            <livewire:admin.ui.menu @routeChanged="$refresh"/>
             @endpersist
+
 
             <!-- / Menu -->
 
@@ -99,6 +101,7 @@ lang="en"
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
+
                     <!-- Content -->
                     <div class="container-xxl flex-grow-1 container-p-y">
                         {{ $slot }}
@@ -152,9 +155,13 @@ lang="en"
     <script src="{{ asset('admin/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}" data-navigate-once>
     </script>
 
+
+
     <!-- Main JS -->
     <script src="{{ asset('admin/assets/js/main.js') }}"></script>
 
+
+    <script src="{{ asset('js/modal.min.js') }}" data-navigate-track></script>
 
 
     @livewireScripts

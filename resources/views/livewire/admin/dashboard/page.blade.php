@@ -1,4 +1,6 @@
 <div>
+
+
     <x-admin.dashboard.index/>
 </div>
 

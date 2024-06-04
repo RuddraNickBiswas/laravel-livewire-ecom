@@ -17,7 +17,9 @@ class TestFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->title(),
+            'phone' => fake()->phoneNumber(),
+            'description' => fake()->text(),
         ];
     }
 }
