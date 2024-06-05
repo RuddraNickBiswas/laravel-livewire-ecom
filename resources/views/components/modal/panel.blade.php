@@ -34,10 +34,11 @@
                     </div>
 
                     <!-- Close Button -->
-                    <div class="position-absolute top-0 end-0 pt-4 pe-4  z-3">
+                    <div class="position-absolute top-0 end-0 pt-4 pe-4"
+                    style="z-index: 600"
+                    >
 
-                        <button type="button" x-on:click="$dialog.close()" class="btn btn-close btn-link waves-effect">
-
+                        <button type="button" x-on:click="$dialog.close()" class="btn btn-close btn-link waves-effect ">
                           </button>
                     </div>
 

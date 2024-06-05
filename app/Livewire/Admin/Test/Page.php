@@ -7,8 +7,10 @@ use App\Models\Test;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Title('Test')]
 #[Layout('layouts.admin.main', ['activeRoute' => 'page'])]
 class Page extends Component
 {
@@ -16,16 +18,27 @@ class Page extends Component
 
     public TestForm $form ;
 
-    // #[Reactive()]
+    public $title;
+    public $breadcrumbs;
+
     public $tests;
-
-
 
 
 
     public function mount()
     {
-        $this->dispatch('routeChanged', 'test');
+        $this->title = 'Test';
+        $this->breadcrumbs = [
+            [
+                'name' => 'Test',
+                'route' => 'admin.test',
+            ],
+            [
+                'name' => 'Dashboard',
+                'route' => 'admin.dashboard',
+            ],
+        ];
+
         $this->tests = Test::orderBy('created_at', 'desc')
         ->take(1)
         ->get();

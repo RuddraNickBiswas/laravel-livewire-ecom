@@ -7,13 +7,26 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Dashboard')]
-#[Layout('layouts.admin.main', ['activeRoute' => 'dashboard'])]
+#[Layout('layouts.admin.main')]
 class Page extends Component
 {
 
+    public $title;
+    public $breadcrumbs;
 
-    public function mount(){
-        $this->dispatch('routeChanged', 'dashboard');
+    public function mount()
+    {
+        $this->title = 'Dashboard';
+        $this->breadcrumbs = [
+            [
+                'name' => 'Test',
+                'route' => 'admin.test',
+            ],
+            [
+                'name' => 'Dashboard',
+                'route' => 'admin.dashboard',
+            ],
+        ];
     }
     public function render()
     {

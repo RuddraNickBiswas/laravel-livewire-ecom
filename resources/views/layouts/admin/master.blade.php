@@ -5,7 +5,7 @@
 
 <head>
     <base href="" />
-    <title>{{ $title ?? 'RNB' }}</title>
+    <title>RNB | @yield('title')</title>
     <meta charset="utf-8" />
     <meta name="description"
         content="
@@ -90,15 +90,21 @@
                     <!--begin::Content wrapper-->
                     <div class="d-flex flex-column flex-column-fluid">
 
-                        <!-- to get perfect design page should incloude those -->
-                        {{-- <x-admin.layout.partials.toolbar >
+                        <!--begin::Content-->
+                        <div id="kt_app_content"
+                            class="app-content  flex-column-fluid ">
+                            <!--begin::Content container-->
+                            <div id="kt_app_content_container"
+                                class="app-container  container-fluid ">
+                                @if (isset($slot)) {{ $slot }}
+                                @else
+                                    @yield('content')
+                                @endif
+                            </div>
+                            <!--end::Content container-->
+                        </div>
+                        <!--end::Content-->
 
-                        </x-admin.layout.partials.toolbar>
-                        <x-admin.layout.partials.content >
-
-                        </x-admin.layout.partials.content> --}}
-
-                        {{ $slot }}
 
                     </div>
                     <!--end::Content wrapper-->

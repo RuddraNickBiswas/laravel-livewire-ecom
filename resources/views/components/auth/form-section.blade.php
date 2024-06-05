@@ -1,9 +1,12 @@
 @props(['submit'])
 
 <div class="card">
-  <h5 class="card-header">
-    {{ $title }}
-  </h5>
+    <div class="card-header">
+        <h5 class="card-title ">
+          {{ $title }}
+        </h5>
+
+    </div>
   <div class="card-body">
     <form wire:submit.prevent="{{ $submit }}">
 
