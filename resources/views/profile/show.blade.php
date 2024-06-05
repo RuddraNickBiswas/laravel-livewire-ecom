@@ -1,8 +1,8 @@
-@extends('layouts.admin.normal-main')
+@extends('layouts.admin.master')
 
-@php
+{{-- @php
 $breadcrumbs = [['link' => 'home', 'name' => 'Home'], ['link' => 'javascript:void(0)', 'name' => 'User'], ['name' => 'Profile']];
-@endphp
+@endphp --}}
 
 @section('title', 'Profile')
 
