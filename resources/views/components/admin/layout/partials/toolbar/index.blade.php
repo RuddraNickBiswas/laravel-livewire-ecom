@@ -16,7 +16,7 @@
                     <!--begin::Item-->
                     @foreach ($breadcrumbs as $breadcrumb)
                         <li class="breadcrumb-item text-muted">
-                            <a wire:navigate href="{{ route($breadcrumb['route']) }}"
+                            <a wire:navigate href="{{$breadcrumb['route']}}"
                                 class="text-muted text-hover-primary">{{ $breadcrumb['name'] }}</a>
                         </li>
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Livewire\Admin\Dashboard;
+namespace App\Livewire\Admin\Category;
 
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('Dashboard')]
+#[Title('Category Group')]
 #[Layout('layouts.admin.main')]
-class Page extends Component
+class CategoryGroup extends Component
 {
 
     public $title;
@@ -19,17 +19,17 @@ class Page extends Component
         $this->title = 'Dashboard';
         $this->breadcrumbs = [
             [
-                'name' => 'Test',
-                'route' => route('admin.test'),
+                'name' => 'Category Group',
+                'route' => route('admin.categoryGroup'),
             ],
             [
-                'name' => 'Dashboard',
-                'route' => route('admin.dashboard'),
+                'name' => 'Category',
+                'route' => route('admin.category'),
             ],
         ];
     }
     public function render()
     {
-        return view('livewire.admin.dashboard.page');
+        return view('livewire.admin.category.category-group');
     }
 }
