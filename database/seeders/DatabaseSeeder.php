@@ -27,5 +27,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Test::factory(50)->create();
+
+
+        $this->call([
+            CategoryGroupSeeder::class,
+
+        ]);
     }
+
 }

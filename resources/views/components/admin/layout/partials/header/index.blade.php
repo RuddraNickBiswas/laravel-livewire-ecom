@@ -1,0 +1,16 @@
+<!--begin::Header-->
+<div id="kt_app_header" class="app-header  d-flex flex-column flex-stack "
+     >
+                        <!--begin::Header main-->
+<div class="d-flex flex-stack flex-grow-1">
+    <x-admin.layout.partials.header.logo/>
+<!--layout-partial:layout/partials/header/_logo.html-->
+
+    <x-admin.layout.partials.header.navbar/>
+<!--layout-partial:layout/partials/header/_navbar.html-->
+</div>
+<!--end::Header main-->
+<!--begin::Separator-->
+<div class="app-header-separator"></div>
+<!--end::Separator-->            </div>
+<!--end::Header-->

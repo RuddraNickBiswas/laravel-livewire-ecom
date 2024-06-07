@@ -7,31 +7,45 @@ use App\Models\Test;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('layouts.admin.main')]
+#[Title('Test')]
+#[Layout('layouts.admin.main', ['activeRoute' => 'page'])]
 class Page extends Component
 {
 
 
     public TestForm $form ;
 
-    // #[Reactive()]
+    public $title;
+    public $breadcrumbs;
+
     public $tests;
-
-
 
 
 
     public function mount()
     {
+        $this->title = 'Test';
+        $this->breadcrumbs = [
+            [
+                'name' => 'Test',
+                'route' => route('admin.test'),
+            ],
+            [
+                'name' => 'Dashboard',
+                'route' => route('admin.dashboard'),
+            ],
+        ];
+
         $this->tests = Test::orderBy('created_at', 'desc')
         ->take(1)
         ->get();
     }
-    #[On('echo:tests, example')]
-    public function exampleBroadcast(){
-        dd('bcsd');
+    #[On('echo:asd,Example')]
+    public function exampleBroadcast($data){
+        dd($data);
     }
 
     public function save(){
