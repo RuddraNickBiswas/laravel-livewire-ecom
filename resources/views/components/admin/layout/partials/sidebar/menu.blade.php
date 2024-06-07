@@ -5,7 +5,7 @@
     class="app-sidebar-menu-primary menu menu-column menu-rounded menu-sub-indention menu-state-bullet-primary px-3 mb-5">
     <!--begin:Menu item-->
     <div data-kt-menu-trigger="click"
-        class="menu-item here show menu-accordion {{ setactive(['admin.test', 'admin.dashboard']) }}">
+        class="menu-item here menu-accordion {{ setactive(['admin.test', 'admin.dashboard']) }}">
         <span class="menu-link"><span class="menu-icon"><i class="ki-outline ki-home-2 fs-2"></i></span><span class="menu-title">Dashboards</span><span
                 class="menu-arrow"></span></span>
 
@@ -171,158 +171,58 @@
         <!--end:Menu sub-->
     </div>
     <!--end:Menu item-->
+
     <!--begin:Menu item-->
     <div data-kt-menu-trigger="click"
-        class="menu-item menu-accordion">
+        class="menu-item menu-accordion
+        {{ setActive(['admin.categoryGroup', 'admin.category', 'admin.subCategory']) }}">
         <!--begin:Menu link--><span class="menu-link"><span class="menu-icon"><i class="ki-outline ki-gift fs-2"></i></span><span
-                class="menu-title">Pages</span><span class="menu-arrow"></span></span>
+                class="menu-title">eCommarce</span><span class="menu-arrow"></span></span>
         <!--end:Menu link-->
         <!--begin:Menu sub-->
         <div class="menu-sub menu-sub-accordion">
             <!--begin:Menu item-->
             <div data-kt-menu-trigger="click"
-                class="menu-item menu-accordion">
+                class="menu-item menu-accordion
+                {{ setActive(['admin.categoryGroup', 'admin.category', 'admin.subCategory']) }}">
                 <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                        class="menu-title">User Profile</span><span class="menu-arrow"></span></span>
+                        class="menu-title">Category</span><span class="menu-arrow"></span></span>
                 <!--end:Menu link-->
                 <!--begin:Menu sub-->
                 <div class="menu-sub menu-sub-accordion">
                     <!--begin:Menu item-->
                     <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/user-profile/overview"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Overview</span></a>
+                        <!--begin:Menu link--><a wire:navigate
+                            class="menu-link {{ setActive(['admin.categoryGroup']) }}"
+                            href="{{ route('admin.categoryGroup') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                class="menu-title">Category Group</span></a>
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
                     <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/user-profile/projects"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Projects</span></a>
+                        <!--begin:Menu link--><a wire:navigate
+                            class="menu-link {{ setActive(['admin.category']) }}"
+                            href="{{ route('admin.category') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                class="menu-title">Category</span></a>
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
                     <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/user-profile/campaigns"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Campaigns</span></a>
+                        <!--begin:Menu link--><a wire:navigate
+                            class="menu-link {{ setActive(['admin.subCategory']) }}"
+                            href="{{ route('admin.subCategory') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                class="menu-title">Sub Category</span></a>
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/user-profile/documents"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Documents</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/user-profile/followers"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Followers</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/user-profile/activity"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Activity</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
+
                 </div>
                 <!--end:Menu sub-->
             </div>
             <!--end:Menu item-->
-            <!--begin:Menu item-->
-            <div data-kt-menu-trigger="click"
-                class="menu-item menu-accordion">
-                <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                        class="menu-title">Account</span><span class="menu-arrow"></span></span>
-                <!--end:Menu link-->
-                <!--begin:Menu sub-->
-                <div class="menu-sub menu-sub-accordion">
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=account/overview"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Overview</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=account/settings"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Settings</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=account/security"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Security</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=account/activity"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Activity</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=account/billing"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Billing</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=account/statements"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Statements</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=account/referrals"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Referrals</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=account/api-keys"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">API Keys</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=account/logs"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Logs</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                </div>
-                <!--end:Menu sub-->
-            </div>
-            <!--end:Menu item-->
+
             <!--begin:Menu item-->
             <div data-kt-menu-trigger="click"
                 class="menu-item menu-accordion">
@@ -699,277 +599,13 @@
                 <!--end:Menu sub-->
             </div>
             <!--end:Menu item-->
-            <!--begin:Menu item-->
-            <div data-kt-menu-trigger="click"
-                class="menu-item menu-accordion">
-                <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                        class="menu-title">Corporate</span><span class="menu-arrow"></span></span>
-                <!--end:Menu link-->
-                <!--begin:Menu sub-->
-                <div class="menu-sub menu-sub-accordion">
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/about"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">About</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/team"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Our Team</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/contact"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Contact Us</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/licenses"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Licenses</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/sitemap"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Sitemap</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                </div>
-                <!--end:Menu sub-->
-            </div>
-            <!--end:Menu item-->
-            <!--begin:Menu item-->
-            <div data-kt-menu-trigger="click"
-                class="menu-item menu-accordion">
-                <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                        class="menu-title">Social</span><span class="menu-arrow"></span></span>
-                <!--end:Menu link-->
-                <!--begin:Menu sub-->
-                <div class="menu-sub menu-sub-accordion">
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/social/feeds"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Feeds</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/social/activity"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Activty</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/social/followers"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Followers</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/social/settings"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Settings</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                </div>
-                <!--end:Menu sub-->
-            </div>
-            <!--end:Menu item-->
-            <!--begin:Menu item-->
-            <div data-kt-menu-trigger="click"
-                class="menu-item menu-accordion">
-                <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                        class="menu-title">Blog</span><span class="menu-arrow"></span></span>
-                <!--end:Menu link-->
-                <!--begin:Menu sub-->
-                <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/blog/home"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Blog Home</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/blog/post"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Blog Post</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                </div>
-                <!--end:Menu sub-->
-            </div>
-            <!--end:Menu item-->
-            <!--begin:Menu item-->
-            <div data-kt-menu-trigger="click"
-                class="menu-item menu-accordion">
-                <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                        class="menu-title">FAQ</span><span class="menu-arrow"></span></span>
-                <!--end:Menu link-->
-                <!--begin:Menu sub-->
-                <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/faq/classic"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">FAQ Classic</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/faq/extended"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">FAQ Extended</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                </div>
-                <!--end:Menu sub-->
-            </div>
-            <!--end:Menu item-->
-            <!--begin:Menu item-->
-            <div data-kt-menu-trigger="click"
-                class="menu-item menu-accordion">
-                <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                        class="menu-title">Pricing</span><span class="menu-arrow"></span></span>
-                <!--end:Menu link-->
-                <!--begin:Menu sub-->
-                <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/pricing"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Column Pricing</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/pricing/table"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Table Pricing</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                </div>
-                <!--end:Menu sub-->
-            </div>
-            <!--end:Menu item-->
-            <!--begin:Menu item-->
-            <div data-kt-menu-trigger="click"
-                class="menu-item menu-accordion">
-                <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                        class="menu-title">Careers</span><span class="menu-arrow"></span></span>
-                <!--end:Menu link-->
-                <!--begin:Menu sub-->
-                <div class="menu-sub menu-sub-accordion">
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/careers/list"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Careers List</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=pages/careers/apply"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Careers Apply</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                </div>
-                <!--end:Menu sub-->
-            </div>
-            <!--end:Menu item-->
-            <!--begin:Menu item-->
-            <div data-kt-menu-trigger="click"
-                class="menu-item menu-accordion">
-                <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                        class="menu-title">Widgets</span><span class="menu-arrow"></span></span>
-                <!--end:Menu link-->
-                <!--begin:Menu sub-->
-                <div class="menu-sub menu-sub-accordion">
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=widgets/lists"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Lists</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=widgets/statistics"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Statistics</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=widgets/charts"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Charts</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=widgets/mixed"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Mixed</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=widgets/tables"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Tables</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link--><a class="menu-link"
-                            href="?page=widgets/feeds"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                class="menu-title">Feeds</span></a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                </div>
-                <!--end:Menu sub-->
-            </div>
-            <!--end:Menu item-->
+
         </div>
         <!--end:Menu sub-->
     </div>
+
+
+
     <!--end:Menu item-->
     <!--begin:Menu item-->
     <div data-kt-menu-trigger="click"
@@ -1402,16 +1038,16 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link--><a class="menu-link"
-                            href="?page=apps/support-center/licenses"><span class="menu-bullet"><span
-                                    class="bullet bullet-dot"></span></span><span class="menu-title">Licenses</span></a>
+                            href="?page=apps/support-center/licenses"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                class="menu-title">Licenses</span></a>
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link--><a class="menu-link"
-                            href="?page=apps/support-center/contact"><span class="menu-bullet"><span
-                                    class="bullet bullet-dot"></span></span><span class="menu-title">Contact Us</span></a>
+                            href="?page=apps/support-center/contact"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                class="menu-title">Contact Us</span></a>
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
@@ -1430,9 +1066,8 @@
                     <!--begin:Menu item-->
                     <div data-kt-menu-trigger="click"
                         class="menu-item menu-accordion mb-1">
-                        <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span
-                                    class="bullet bullet-dot"></span></span><span class="menu-title">Users</span><span
-                                class="menu-arrow"></span></span>
+                        <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                class="menu-title">Users</span><span class="menu-arrow"></span></span>
                         <!--end:Menu link-->
                         <!--begin:Menu sub-->
                         <div class="menu-sub menu-sub-accordion">
@@ -1461,9 +1096,8 @@
                     <!--begin:Menu item-->
                     <div data-kt-menu-trigger="click"
                         class="menu-item menu-accordion">
-                        <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span
-                                    class="bullet bullet-dot"></span></span><span class="menu-title">Roles</span><span
-                                class="menu-arrow"></span></span>
+                        <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                class="menu-title">Roles</span><span class="menu-arrow"></span></span>
                         <!--end:Menu link-->
                         <!--begin:Menu sub-->
                         <div class="menu-sub menu-sub-accordion">
@@ -1594,8 +1228,8 @@
                     <!--begin:Menu item-->
                     <div data-kt-menu-trigger="click"
                         class="menu-item menu-accordion">
-                        <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span
-                                    class="bullet bullet-dot"></span></span><span class="menu-title">View
+                        <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                class="menu-title">View
                                 Invoices</span><span class="menu-arrow"></span></span>
                         <!--end:Menu link-->
                         <!--begin:Menu sub-->
@@ -1678,8 +1312,8 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link--><a class="menu-link"
-                            href="?page=apps/file-manager/settings"><span class="menu-bullet"><span
-                                    class="bullet bullet-dot"></span></span><span class="menu-title">Settings</span></a>
+                            href="?page=apps/file-manager/settings"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                class="menu-title">Settings</span></a>
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->

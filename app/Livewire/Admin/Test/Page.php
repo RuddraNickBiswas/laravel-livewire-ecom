@@ -31,11 +31,11 @@ class Page extends Component
         $this->breadcrumbs = [
             [
                 'name' => 'Test',
-                'route' => 'admin.test',
+                'route' => route('admin.test'),
             ],
             [
                 'name' => 'Dashboard',
-                'route' => 'admin.dashboard',
+                'route' => route('admin.dashboard'),
             ],
         ];
 
