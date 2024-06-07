@@ -15,10 +15,25 @@ namespace App\Models{
 /**
  * 
  *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property int $category_group_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\CategoryGroup $categoryGroup
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SubCategory> $subCategories
+ * @property-read int|null $sub_categories_count
  * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereCategoryGroupId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  */
 	class Category extends \Eloquent {}
 }
@@ -27,12 +42,22 @@ namespace App\Models{
 /**
  * 
  *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Category> $categories
  * @property-read int|null $categories_count
  * @method static \Database\Factories\CategoryGroupFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|CategoryGroup newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CategoryGroup newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CategoryGroup query()
+ * @method static \Illuminate\Database\Eloquent\Builder|CategoryGroup whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CategoryGroup whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CategoryGroup whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CategoryGroup whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CategoryGroup whereUpdatedAt($value)
  */
 	class CategoryGroup extends \Eloquent {}
 }
@@ -41,10 +66,23 @@ namespace App\Models{
 /**
  * 
  *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property int $category_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Category $category
  * @method static \Database\Factories\SubCategoryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|SubCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SubCategory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SubCategory query()
+ * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereUpdatedAt($value)
  */
 	class SubCategory extends \Eloquent {}
 }

@@ -12,13 +12,13 @@
         aria-describedby="form {{ $name }}"
         @class([
             'form-control',
-            'border-danger border-2' => $errors->has($name),
+            'border-danger border-2' => $errors->has($model),
         ])
-        @error($name)
+        @error($model)
                    aria-invalid="true"
                    aria-description="{{ $message }}"
                @enderror>
-    @error($name)
+    @error($model)
         <h6 class="text-danger fst-italic"
             aria-live="assertive">{{ $message }}</h6>
     @enderror

@@ -13,7 +13,8 @@ class CategoryGroup extends Model
     protected $fillable = ['name' , 'slug'];
 
 
-    public function categories() :HasMany
+
+       public function categories() :HasMany
     {
         return $this->hasMany(Category::class);
     }
