@@ -44,31 +44,8 @@
 
             </span>
 
-            <div class="menu-sub menu-sub-accordion">
+            <livewire:admin.category.index.category-list  :categoryGroup="$categoryGroup" key="{{ $categoryGroup->id }} {{ $categoryGroup->name }} {{ uniqid() }}" />
 
-                @foreach ($categoryGroup->categories as $category)
-                    <div class="menu-item menu-accordion show">
-                        {{-- category --}}
-                        <livewire:admin.category.index.category-list  :category=$category
-                            key='{{ $category->id }} {{ $category->name }}' />
-
-                        {{-- category --}}
-                        <div class="menu-sub menu-sub-accordion menu-active-bg">
-
-                            @foreach ($category->subCategories as $subCategory)
-                                <div class="menu-item">
-                                    <livewire:admin.category.index.sub-category-list :subCategory="$subCategory"
-                                        key='{{ $subCategory->id }} {{ $subCategory->name }}' />
-
-                                </div>
-                            @endforeach
-
-                        </div>
-                        <!--end:Menu sub-->
-                    </div>
-                @endforeach
-            </div>
-            <!--end:Menu sub-->
         </div>
         <!--end:Menu item-->
 
