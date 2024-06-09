@@ -44,7 +44,7 @@
 
             </span>
 
-            <livewire:admin.category.index.category-list  :categoryGroup="$categoryGroup" key="{{ $categoryGroup->id }} {{ $categoryGroup->name }} {{ uniqid() }}" />
+            <livewire:admin.category.index.category-list  :categoryGroup="$categoryGroup" key="{{ $categoryGroup->id }} {{ $categoryGroup->name }}" />
 
         </div>
         <!--end:Menu item-->
