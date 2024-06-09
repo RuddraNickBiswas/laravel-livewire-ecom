@@ -11,10 +11,9 @@
 
 <x-admin.layout.partials.content>
         <input wire:model.live="search" type="text" class="form-control" placeholder="Search...">
-
         @foreach ($categoryGroups as $categoryGroup)
-            <livewire:admin.category.index.category-group-list  :categoryGroup='$categoryGroup'
-                key='{{ $categoryGroup->id }} {{ $categoryGroup->name }}' />
+            <livewire:admin.category.index.category-group-list-item  :categoryGroup='$categoryGroup'
+                key="{{ $categoryGroup->id }} {{ $categoryGroup->name }} category-group-list-item" />
         @endforeach
 
     </x-admin.layout.partials.content>

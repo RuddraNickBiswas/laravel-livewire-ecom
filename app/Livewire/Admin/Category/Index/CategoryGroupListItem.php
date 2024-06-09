@@ -8,7 +8,7 @@ use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Reactive;
 
-class CategoryGroupList extends Component
+class CategoryGroupListItem extends Component
 {
 
     public CategoryForm $form;
@@ -55,6 +55,7 @@ class CategoryGroupList extends Component
             'slug' => Str::slug($this->form->name)
         ]);
 
+        $this->dispatch('category-created.'.$this->categoryGroup->id);
         $this->showCreateModal = false;
     }
 
@@ -67,6 +68,6 @@ class CategoryGroupList extends Component
     }
     public function render()
     {
-        return view('livewire.admin.category.index.category-group-list');
+        return view('livewire.admin.category.index.category-group-list-item');
     }
 }
