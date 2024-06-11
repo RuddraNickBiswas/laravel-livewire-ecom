@@ -46,9 +46,9 @@ namespace App\Models{
  * @property int $category_group_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\CategoryGroup $categoryGroup
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SubCategory> $subCategories
- * @property-read int|null $sub_categories_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $children
+ * @property-read int|null $children_count
+ * @property-read Category|null $parent
  * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
@@ -85,31 +85,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|CategoryGroup whereUpdatedAt($value)
  */
 	class CategoryGroup extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * 
- *
- * @property int $id
- * @property string $name
- * @property string $slug
- * @property int $category_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Category $category
- * @method static \Database\Factories\SubCategoryFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory query()
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereCategoryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereUpdatedAt($value)
- */
-	class SubCategory extends \Eloquent {}
 }
 
 namespace App\Models{

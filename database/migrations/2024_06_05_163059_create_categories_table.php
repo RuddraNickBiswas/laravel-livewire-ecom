@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->foreignId('category_group_id')->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreignId('category_group_id')->nullable();
             $table->timestamps();
         });
     }

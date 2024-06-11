@@ -1,13 +1,13 @@
-@extends('layouts.admin.master')
+{{-- @extends('layouts.admin.master') --}}
 
 {{-- @php
 $breadcrumbs = [['link' => 'home', 'name' => 'Home'], ['link' => 'javascript:void(0)', 'name' => 'User'], ['name' => 'Profile']];
 @endphp --}}
 
-@section('title', 'Profile')
+{{-- @section('title', 'Profile') --}}
 
 
-@section('content')
+{{-- @section('content') --}}
 
   @if (Laravel\Fortify\Features::canUpdateProfileInformation())
    <div class="mb-4">
@@ -35,4 +35,4 @@ $breadcrumbs = [['link' => 'home', 'name' => 'Home'], ['link' => 'javascript:voi
     @livewire('profile.delete-user-form')
   @endif
 
-@endsection
+{{-- @endsection --}}
