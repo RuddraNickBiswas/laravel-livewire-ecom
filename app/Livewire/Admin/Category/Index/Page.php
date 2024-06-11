@@ -87,6 +87,8 @@ class Page extends Component
         ]);
         $this->updateCategoryGroup();
         $this->showModal = false;
+        $this->dispatch('error', 'This is a success message');
+
     }
     public function render()
     {

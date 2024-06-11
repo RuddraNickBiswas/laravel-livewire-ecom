@@ -8,7 +8,9 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 #[Title('Test')]
 #[Layout('layouts.admin.main', ['activeRoute' => 'page'])]
@@ -16,13 +18,19 @@ class Page extends Component
 {
 
 
+    use WithFileUploads;
     public TestForm $form ;
 
     public $title;
     public $breadcrumbs;
 
+    public $status = 0;
+
+    public $text;
     public $tests;
 
+    #[Validate(['photos.*' => 'image|max:1024'])]
+    public $photos = [];
 
 
     public function mount()
@@ -50,7 +58,9 @@ class Page extends Component
 
     public function save(){
 
-        $this->form->save();
+
+        // $this->form->save();
+        dd($this->text);
         // dd('own save');
     }
 

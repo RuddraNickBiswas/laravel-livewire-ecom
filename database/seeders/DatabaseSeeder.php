@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call([
+            BrandSeeder::class,
             CategoryGroupSeeder::class,
-
         ]);
     }
 

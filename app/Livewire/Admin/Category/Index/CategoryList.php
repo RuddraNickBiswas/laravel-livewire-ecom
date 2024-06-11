@@ -2,69 +2,28 @@
 
 namespace App\Livewire\Admin\Category\Index;
 
-use App\Livewire\Forms\Admin\Category\CategoryForm;
-use App\Models\Category;
-use Livewire\Component;
-use Illuminate\Support\Str;
+use App\Models\CategoryGroup;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
+use Livewire\Component;
 
 class CategoryList extends Component
 {
+    public CategoryGroup $categoryGroup ;
 
-    public Category $category;
+    public $categories = [];
 
-    public CategoryForm $form;
+    public function mount(CategoryGroup $categoryGroup){
 
-
-
-    public $showEditModal = false;
-
-    public $showCreateModal = false;
-    public $showDeleteModal = false;
-
-    public function mount(Category $category)
-    {
-
-        $this->form->setCategory($this->category);
+        $this->categoryGroup = $categoryGroup;
+       $this->updateCategoryList();
     }
 
-    public function createModal()
-    {
-        $this->form->name = '';
-    }
 
-    public function editModal()
-    {
-        $this->form->resetForm();
-        $this->form->setCategory($this->category);
-    }
+    #[On('category-created.{categoryGroup.id}')]
+    public function updateCategoryList(){
 
-    public function save()
-    {
-        $this->category->update([
-            'name' => $this->form->name,
-            'slug' => Str::slug($this->form->name),
-        ]);
-
-        $this->showEditModal = false;
-    }
-
-    public function createSubCategory(){
-
-        $this->category->subCategories()->create([
-            'name' => $this->form->name,
-            'slug' => Str::slug($this->form->name)
-        ]);
-
-        $this->showCreateModal = false;
-    }
-
-    public function delete($id)
-    {
-        $this->category->destroy($id);
-
-        $this->dispatch('category-deleted');
-        $this->showDeleteModal = false;
+        $this->categories = $this->categoryGroup->categories()->get();
     }
 
     public function render()

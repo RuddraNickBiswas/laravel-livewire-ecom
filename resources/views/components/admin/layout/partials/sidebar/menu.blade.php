@@ -175,7 +175,7 @@
     <!--begin:Menu item-->
     <div data-kt-menu-trigger="click"
         class="menu-item menu-accordion
-        {{ setActive(['admin.categoryGroup', 'admin.category', 'admin.subCategory']) }}">
+        {{ setActive(['admin.categoryGroup', 'admin.category', 'admin.subCategory', 'admin.brand']) }}">
         <!--begin:Menu link--><span class="menu-link"><span class="menu-icon"><i class="ki-outline ki-gift fs-2"></i></span><span
                 class="menu-title">eCommarce</span><span class="menu-arrow"></span></span>
         <!--end:Menu link-->
@@ -222,6 +222,32 @@
                 <!--end:Menu sub-->
             </div>
             <!--end:Menu item-->
+
+
+            <div data-kt-menu-trigger="click"
+            class="menu-item menu-accordion
+            {{ setActive(['admin.brand']) }}">
+            <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                    class="menu-title">Brand</span><span class="menu-arrow"></span></span>
+            <!--end:Menu link-->
+            <!--begin:Menu sub-->
+            <div class="menu-sub menu-sub-accordion">
+                <!--begin:Menu item-->
+                <div class="menu-item">
+                    <!--begin:Menu link--><a wire:navigate
+                        class="menu-link {{ setActive(['admin.brand']) }}"
+                        href="{{ route('admin.brand') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                            class="menu-title">Brand</span></a>
+                    <!--end:Menu link-->
+                </div>
+
+            </div>
+            <!--end:Menu sub-->
+        </div>
+
+
+
+
 
             <!--begin:Menu item-->
             <div data-kt-menu-trigger="click"
