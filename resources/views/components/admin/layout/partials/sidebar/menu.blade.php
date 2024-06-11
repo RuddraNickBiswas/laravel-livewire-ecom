@@ -175,7 +175,7 @@
     <!--begin:Menu item-->
     <div data-kt-menu-trigger="click"
         class="menu-item menu-accordion
-        {{ setActive(['admin.categoryGroup', 'admin.category', 'admin.subCategory']) }}">
+        {{ setActive(['admin.categoryGroup', 'admin.category', 'admin.subCategory', 'admin.brand']) }}">
         <!--begin:Menu link--><span class="menu-link"><span class="menu-icon"><i class="ki-outline ki-gift fs-2"></i></span><span
                 class="menu-title">eCommarce</span><span class="menu-arrow"></span></span>
         <!--end:Menu link-->
@@ -226,7 +226,7 @@
 
             <div data-kt-menu-trigger="click"
             class="menu-item menu-accordion
-            {{ setActive(['admin.categoryGroup', 'admin.category', 'admin.brand']) }}">
+            {{ setActive(['admin.brand']) }}">
             <!--begin:Menu link--><span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
                     class="menu-title">Brand</span><span class="menu-arrow"></span></span>
             <!--end:Menu link-->

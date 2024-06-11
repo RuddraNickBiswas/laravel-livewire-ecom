@@ -38,11 +38,16 @@
         rel="stylesheet"
         type="text/css" />
 
+
+
+
+
+    @vite(['resources/js/app.js'])
     <!-- Styles -->
     @stack('styles')
+
     @livewireStyles
     <!--end::Global Stylesheets Bundle-->
-    @vite(['resources/js/app.js'])
     <script data-navigate-track>
         // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking)
         if (window.top != window.self) {
@@ -146,6 +151,8 @@
         data-navigate-once></script>
     <!--end::Global Javascript Bundle-->
 
+
+
     {{-- <!--begin::Vendors Javascript(used for this page only)-->
     <script src="{{ asset('admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
@@ -171,12 +178,39 @@
 
     <!--end::Javascript-->
 
-    <script data-navigate-track>
 
+
+    <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('success', (message) => {
+                toastr.success(message);
+            });
+            Livewire.on('error', (message) => {
+                toastr.error(message);
+            });
+
+            Livewire.on('swal', (message, icon, confirmButtonText) => {
+                if (typeof icon === 'undefined') {
+                    icon = 'success';
+                }
+                if (typeof confirmButtonText === 'undefined') {
+                    confirmButtonText = 'Ok, got it!';
+                }
+                Swal.fire({
+                    text: message,
+                    icon: icon,
+                    buttonsStyling: false,
+                    confirmButtonText: confirmButtonText,
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    }
+                });
+            });
+        });
     </script>
 
-    @livewireScripts
     @stack('scripts')
+    @livewireScripts
 </body>
 <!--end::Body-->
 

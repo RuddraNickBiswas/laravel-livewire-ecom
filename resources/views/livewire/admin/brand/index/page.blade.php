@@ -1,8 +1,8 @@
 <div>
-
+    {{-- {{ phpinfo() }} --}}
     <x-admin.layout.partials.toolbar :breadcrumbs=$breadcrumbs>
-        <x-admin.layout.partials.toolbar.action >
-            <x-admin.pages.brand.modal title="Create Brand" showModal="showModal"  submitAction='save'>
+        <x-admin.layout.partials.toolbar.action>
+            <x-admin.pages.brand.modal title="Create Brand" showModal="form.showCreateModal"  submitAction='create' :form=$form>
                 <button class="btn btn-primary fs-7 fw-bold">Create</button>
             </x-admin.pages.brand.modal>
         </x-admin.layout.partials.toolbar.action>

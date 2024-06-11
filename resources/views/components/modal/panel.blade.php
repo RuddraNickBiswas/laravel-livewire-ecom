@@ -1,7 +1,7 @@
 <template x-teleport="body">
     <div x-dialog
         x-model="dialogOpen"
-        style="display: none; z-index: 50000;"
+        style="display: none; z-index: 500;"
         class="position-fixed top-0 start-0 w-100 h-100 overflow-x-hidden text-start pt-50 pt-sm-0">
         <!-- Overlay -->
         <div x-dialog:overlay
