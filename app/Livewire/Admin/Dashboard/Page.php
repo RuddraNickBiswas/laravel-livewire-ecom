@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Admin\Dashboard;
 
+use App\Livewire\Form\Quill;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -14,9 +16,13 @@ class Page extends Component
     public $title;
     public $breadcrumbs;
 
+    public $text = "<h1>hi broter</h1>";
+
     public function mount()
     {
         $this->title = 'Dashboard';
+
+
         $this->breadcrumbs = [
             [
                 'name' => 'Test',
@@ -28,6 +34,13 @@ class Page extends Component
             ],
         ];
     }
+
+
+
+    public function save (){
+        dd($this->text);
+    }
+
     public function render()
     {
         return view('livewire.admin.dashboard.page');

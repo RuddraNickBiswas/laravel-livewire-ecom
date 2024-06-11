@@ -37,6 +37,7 @@ class BrandSeeder extends Seeder
                 'name' => $brand,
                 'slug' => Str::slug($brand),
                 'is_active' => (bool) random_int(0, 1),
+                'thumbnail' => 'https://logopond.com/logos/db69b8933f043810f3c4462c73585954.png'
             ]);
         }
     }

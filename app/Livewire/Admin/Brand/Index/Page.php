@@ -2,19 +2,24 @@
 
 namespace App\Livewire\Admin\Brand\Index;
 
+use App\Livewire\Forms\Admin\Brand\BrandForm;
+use App\Models\Brand;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
-
+use Illuminate\Support\Str;
+use Livewire\WithFileUploads;
 
 #[Title('Brand')]
 #[Layout('layouts.admin.main')]
 class Page extends Component
 {
 
+    use WithFileUploads;
+    public BrandForm $form;
+
     public $breadcrumbs;
 
-    public $setActive = 'false';
 
     public function mount()
     {
@@ -29,15 +34,13 @@ class Page extends Component
                 'route' => route('admin.category'),
             ],
         ];
-
-
-
-
     }
 
-    public function save (){
-        dd('hi');
+    public function create()
+    {
+        $this->form->save();
     }
+
 
     public function render()
     {

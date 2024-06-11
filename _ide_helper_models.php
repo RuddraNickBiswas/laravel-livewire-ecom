@@ -18,6 +18,31 @@ namespace App\Models{
  * @property int $id
  * @property string $name
  * @property string $slug
+ * @property string|null $thumbnail
+ * @property bool $is_active
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand whereThumbnail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand whereUpdatedAt($value)
+ */
+	class Brand extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
  * @property int $category_group_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at

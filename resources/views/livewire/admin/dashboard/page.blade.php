@@ -20,7 +20,17 @@
 
 
     <x-admin.layout.partials.content>
-        <h1>hi</h1>
+
+
+
+        <x-form.cropper />
+            {{-- <x-form.quill model="text" :value='$text' toolbar="full" /> --}}
+
+
+        <button  wire:click='save' class="btn btn-primary">Save</button>
+
+
+
     </x-admin.layout.partials.content>
 
 </div>
