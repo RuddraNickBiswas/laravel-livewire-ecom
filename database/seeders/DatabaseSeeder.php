@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin'
         ]);
 
-        Test::factory(50)->create();
+        Test::factory(9)->create();
 
 
         $this->call([

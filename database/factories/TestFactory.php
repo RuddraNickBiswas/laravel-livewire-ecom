@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\DeliveryStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,11 @@ class TestFactory extends Factory
     {
         return [
             'title' => fake()->title(),
+            'slug' => fake()->slug(),
             'phone' => fake()->phoneNumber(),
+            'price' => fake()->randomFloat(2, 55, 409.99),
+            'color' => fake()->hexColor(),
+            'status' => fake()->randomElement(array_column(DeliveryStatus::cases(), 'value')),
             'description' => fake()->text(),
         ];
     }
