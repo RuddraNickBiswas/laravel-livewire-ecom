@@ -11,14 +11,39 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name' , 'slug'];
+    protected $fillable = ['name' , 'slug','parent_id','is_active',];
 
-    public function categoryGroup () :BelongsTo
+    public function parent()
     {
-        return $this->belongsTo(CategoryGroup::class);
+        return $this->belongsTo(Category::class, 'parent_id');
     }
 
-    public function subCategories() : HasMany {
-        return $this->hasMany(SubCategory::class);
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
     }
+
+
+    public static function category()
+    {
+        return self::whereNull('parent_id');
+    }
+
+
+    public function subCategories(): HasMany
+    {
+        return $this->hasMany(Category::class, 'parent_id')->with('subcategories');
+    }
+
+    public function getDescendantsAndSelf()
+    {
+        $descendants = collect([$this->id]);
+
+        foreach ($this->children as $child) {
+            $descendants = $descendants->merge($child->getDescendantsAndSelf());
+        }
+
+        return $descendants;
+    }
+
 }

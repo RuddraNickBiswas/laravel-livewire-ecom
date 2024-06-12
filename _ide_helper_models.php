@@ -43,11 +43,15 @@ namespace App\Models{
  * @property int $id
  * @property string $name
  * @property string $slug
- * @property int $category_group_id
+ * @property int|null $parent_id
+ * @property int|null $category_group_id
+ * @property int $is_active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\CategoryGroup $categoryGroup
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SubCategory> $subCategories
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $children
+ * @property-read int|null $children_count
+ * @property-read Category|null $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $subCategories
  * @property-read int|null $sub_categories_count
  * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
@@ -56,7 +60,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereCategoryGroupId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereIsActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  */
@@ -92,44 +98,34 @@ namespace App\Models{
  * 
  *
  * @property int $id
- * @property string $name
+ * @property string $title
  * @property string $slug
+ * @property string $phone
+ * @property string|null $color
+ * @property string $price
+ * @property string|null $thumbnail
+ * @property string $description
+ * @property \App\Enums\DeliveryStatus $status
+ * @property int $is_published
  * @property int $category_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Category $category
- * @method static \Database\Factories\SubCategoryFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory query()
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereCategoryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubCategory whereUpdatedAt($value)
- */
-	class SubCategory extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * 
- *
- * @property int $id
- * @property string $title
- * @property string $phone
- * @property string $description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Database\Factories\TestFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Test newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Test newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Test query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Test whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Test whereColor($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Test whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Test whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Test whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Test whereIsPublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Test wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Test wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Test whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Test whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Test whereThumbnail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Test whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Test whereUpdatedAt($value)
  */

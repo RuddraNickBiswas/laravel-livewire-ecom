@@ -14,113 +14,16 @@ class CategoryGroupSeeder extends Seeder
     public function run(): void
     {
         $categoryGroups = [
-            [
-                'name' => 'Electronics',
-                'slug' => 'electronics',
-                'categories' => [
-                    [
-                        'name' => 'TVs',
-                        'slug' => 'tvs',
-                        'sub_categories' => [
-                            [
-                                'name' => 'LED TVs',
-                                'slug' => 'led-tvs',
-                            ],
-                            [
-                                'name' => 'OLED TVs',
-                                'slug' => 'oled-tvs',
-                            ],
-                        ],
-                    ],
-                    [
-                        'name' => 'Laptops',
-                        'slug' => 'laptops',
-                        'sub_categories' => [
-                            [
-                                'name' => 'Gaming Laptops',
-                                'slug' => 'gaming-laptops',
-                            ],
-                            [
-                                'name' => 'Workstations',
-                                'slug' => 'workstations',
-                            ],
-                        ],
-                    ],
-                    [
-                        'name' => 'Smartphones',
-                        'slug' => 'smartphones',
-                        'sub_categories' => [
-                            [
-                                'name' => 'Android Phones',
-                                'slug' => 'android-phones',
-                            ],
-                            [
-                                'name' => 'iOS Phones',
-                                'slug' => 'ios-phones',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-            [
-                'name' => 'Clothing',
-                'slug' => 'clothing',
-                'categories' => [
-                    [
-                        'name' => 'Men\'s Clothing',
-                        'slug' => 'mens-clothing',
-                        'sub_categories' => [
-                            [
-                                'name' => 'Shirts',
-                                'slug' => 'shirts',
-                            ],
-                            [
-                                'name' => 'Pants',
-                                'slug' => 'pants',
-                            ],
-                        ],
-                    ],
-                    [
-                        'name' => 'Women\'s Clothing',
-                        'slug' => 'womens-clothing',
-                        'sub_categories' => [
-                            [
-                                'name' => 'Dresses',
-                                'slug' => 'dresses',
-                            ],
-                            [
-                                'name' => 'Jeans',
-                                'slug' => 'jeans',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
+            ['name' => 'Electronics', 'slug' => 'electronics'],
+            ['name' => 'Home & Kitchen', 'slug' => 'home-kitchen'],
+            ['name' => 'Fashion', 'slug' => 'fashion'],
+            ['name' => 'Health & Beauty', 'slug' => 'health-beauty'],
+            ['name' => 'Sports & Outdoors', 'slug' => 'sports-outdoors'],
+            ['name' => 'Toys & Games', 'slug' => 'toys-games'],
         ];
 
-        foreach ($categoryGroups as $groupData) {
-            $categoryGroup = CategoryGroup::create([
-                'name' => $groupData['name'],
-                'slug' => $groupData['slug'],
-            ]);
-
-            if(isset($groupData['categories'])){
-                foreach ($groupData['categories'] as $categoryData) {
-                    $category = $categoryGroup->categories()->create([
-                        'name' => $categoryData['name'],
-                        'slug' => $categoryData['slug'],
-                    ]);
-
-                    if (isset($categoryData['sub_categories'])){
-                        foreach ($categoryData['sub_categories'] as $subCategoryData) {
-                            $category->subCategories()->create([
-                                'name' => $subCategoryData['name'],
-                                'slug' => $subCategoryData['slug'],
-                            ]);
-                        }
-                    }
-                }
-            }
+        foreach ($categoryGroups as $group) {
+            CategoryGroup::create($group);
         }
     }
 }

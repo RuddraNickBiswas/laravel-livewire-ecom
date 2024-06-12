@@ -7,10 +7,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/trigger-event', function () {
-    broadcast(new \App\Events\ExampleEvent());
-    return 'Event has been broadcast!';
-});
+
 
 Route::middleware([
     'auth:sanctum',
@@ -22,6 +19,6 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/admin/login', \App\Livewire\Admin\Auth\Login::class)
-->middleware('guest')
-->name('admin.login');
+// Route::get('/admin/login', \App\Livewire\Admin\Auth\Login::class)
+// ->middleware('guest')
+// ->name('admin.login');
