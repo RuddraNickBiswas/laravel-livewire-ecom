@@ -6,6 +6,7 @@ use App\Enums\DeliveryStatus;
 use App\Filament\Resources\TestResource\Pages;
 use App\Filament\Resources\TestResource\RelationManagers;
 use App\Models\Test;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
@@ -54,6 +55,8 @@ class TestResource extends Resource
 
                 Section::make('meta')->schema([
                     FileUpload::make('thumbnail')->disk('test'),
+                    SelectTree::make('category_id')
+                        ->relationship('category', 'name', 'parent_id'),
                     ColorPicker::make('color'),
                     Checkbox::make('published')->required()
                 ])->columnSpan(1),

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\DeliveryStatus;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,6 +26,7 @@ class TestFactory extends Factory
             'color' => fake()->hexColor(),
             'status' => fake()->randomElement(array_column(DeliveryStatus::cases(), 'value')),
             'description' => fake()->text(),
+            'category_id' => Category::inRandomOrder()->value('id'),
         ];
     }
 }

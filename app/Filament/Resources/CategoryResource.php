@@ -4,7 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Filament\Resources\CategoryResource\RelationManagers\SubcategoriesRelationManager;
 use App\Models\Category;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Grid;
@@ -13,6 +15,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -55,6 +58,9 @@ class CategoryResource extends Resource
                 TextColumn::make('id')->sortable()->searchable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('slug')->sortable()->searchable()->toggleable(),
+                TextColumn::make('parent.name')->sortable()->toggleable(),
+                TextColumn::make('children.name')->toggleable(isToggledHiddenByDefault:true),
+                CheckboxColumn::make('is_active')->sortable(),
             ])
             ->filters([
                 //
@@ -72,7 +78,7 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            SubcategoriesRelationManager::class,
         ];
     }
 

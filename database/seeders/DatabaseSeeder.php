@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Test;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -26,14 +27,17 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin'
         ]);
 
-        Test::factory(9)->create();
-
-
         $this->call([
             BrandSeeder::class,
             CategoryGroupSeeder::class,
             CategorySeeder::class,
-        ]);
-    }
+            ]);
 
+            // Check if categories are seeded correctly
+        if (Category::count() > 0) {
+            Test::factory(9)->create();
+        } else {
+            $this->command->info('No categories found! Make sure CategorySeeder is working.');
+        }
+    }
 }

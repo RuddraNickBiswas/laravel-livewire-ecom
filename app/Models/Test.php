@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\DeliveryStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
 class Test extends Model
@@ -20,6 +21,7 @@ class Test extends Model
         'thumbnail',
         'is_active',
         'description',
+        'category_id',
     ];
 
 
@@ -30,10 +32,14 @@ class Test extends Model
         ];
     }
 
-
     public function thumbnailUrl(){
         return $this->thumbnail
             ?  Storage::disk('test')->url($this->thumbnail)
             : "https://logopond.com/logos/db69b8933f043810f3c4462c73585954.png";
+    }
+
+
+    public function category() :BelongsTo{
+        return $this->belongsTo(Category::class);
     }
 }

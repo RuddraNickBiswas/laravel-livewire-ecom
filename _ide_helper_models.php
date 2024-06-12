@@ -45,11 +45,14 @@ namespace App\Models{
  * @property string $slug
  * @property int|null $parent_id
  * @property int|null $category_group_id
+ * @property int $is_active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $children
  * @property-read int|null $children_count
  * @property-read Category|null $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $subCategories
+ * @property-read int|null $sub_categories_count
  * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
@@ -57,6 +60,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereCategoryGroupId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereIsActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
@@ -103,12 +107,15 @@ namespace App\Models{
  * @property string $description
  * @property \App\Enums\DeliveryStatus $status
  * @property int $is_published
+ * @property int $category_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Category $category
  * @method static \Database\Factories\TestFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Test newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Test newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Test query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Test whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Test whereColor($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Test whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Test whereDescription($value)

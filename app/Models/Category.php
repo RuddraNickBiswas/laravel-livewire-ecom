@@ -11,7 +11,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name' , 'slug','is_active'];
+    protected $fillable = ['name' , 'slug','parent_id','is_active',];
 
     public function parent()
     {
@@ -24,6 +24,16 @@ class Category extends Model
     }
 
 
+    public static function category()
+    {
+        return self::whereNull('parent_id');
+    }
+
+
+    public function subCategories(): HasMany
+    {
+        return $this->hasMany(Category::class, 'parent_id')->with('subcategories');
+    }
 
     public function getDescendantsAndSelf()
     {

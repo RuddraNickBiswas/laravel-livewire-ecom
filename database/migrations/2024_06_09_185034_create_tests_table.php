@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('description');
             $table->enum('status', ['pending', 'approve', 'rejected', 'delivered'])->default('pending');
             $table->boolean('is_published')->default(false);
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->timestamps();
         });
     }
