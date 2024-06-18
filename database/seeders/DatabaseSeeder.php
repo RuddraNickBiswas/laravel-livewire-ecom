@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Check if categories are seeded correctly
-        Product::factory()->withCategories()->withVariants()->count(50)->create();
+        Product::factory()->withLongDescription()->withCategories()->withVariants()->count(50)->create();
         // Check if categories are seeded correctly
         if (Category::count() > 0) {
             Test::factory(9)->create();

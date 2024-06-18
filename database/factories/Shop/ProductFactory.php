@@ -32,7 +32,9 @@ class ProductFactory extends Factory
             'user_id' => User::inRandomOrder()->first()->id,
             'brand_id' =>  Brand::inRandomOrder()->first()->id,
             'qty' => fake()->numberBetween(1, 100),
+            'sku' => fake()->slug,
             'description' => fake()->paragraph,
+            'cost' => fake()->randomFloat(2, 3, 300),
             'price' => fake()->randomFloat(2, 10, 1000),
             'discounted_price' => fake()->optional()->randomFloat(2, 5, 500),
             'is_active' => fake()->boolean,
@@ -43,6 +45,15 @@ class ProductFactory extends Factory
             'updated_at' => $createdAt,
         ];
     }
+
+    public function withLongDescription()
+    {
+        return $this->afterCreating(function (Product $product)
+        {
+            $product->longDescription()->create(['description' =>fake()->randomHtml()]);
+        });
+    }
+
     public function withCategories()
     {
         return $this->afterCreating(function (Product $product) {

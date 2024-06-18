@@ -26,6 +26,8 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $children
  * @property-read int|null $children_count
  * @property-read Category|null $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\Product> $products
+ * @property-read int|null $products_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $subCategories
  * @property-read int|null $sub_categories_count
  * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
@@ -100,51 +102,22 @@ namespace App\Models\Shop{
 /**
  * 
  *
- * @property int $id
- * @property string $name
- * @property string $slug
- * @property string $thumbnail
- * @property int $user_id
- * @property int|null $brand_id
- * @property int $qty
- * @property string $description
- * @property float $price
- * @property float|null $discounted_price
- * @property int $is_active
- * @property int $is_approved
- * @property string|null $seo_title
- * @property string|null $seo_description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Shop\Brand|null $brand
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Category> $categories
  * @property-read int|null $categories_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\ProductImage> $images
  * @property-read int|null $images_count
  * @property-read \App\Models\Shop\ProductLongDescription|null $longDescription
- * @property-read \App\Models\User $owner
+ * @property-read \App\Models\User|null $owner
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\ProductVariant> $variants
  * @property-read int|null $variants_count
  * @method static \Database\Factories\Shop\ProductFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Product query()
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereBrandId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereDiscountedPrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereIsActive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereIsApproved($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereQty($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereSeoDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereSeoTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereThumbnail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product withoutTrashed()
  */
 	class Product extends \Eloquent {}
 }
@@ -158,7 +131,7 @@ namespace App\Models\Shop{
  * @property string $path
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Shop\Product $product
+ * @property-read \App\Models\Shop\Product|null $product
  * @method static \Database\Factories\Shop\ProductImageFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|ProductImage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductImage newQuery()
@@ -176,21 +149,11 @@ namespace App\Models\Shop{
 /**
  * 
  *
- * @property int $id
- * @property string $description
- * @property int $product_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Shop\Product $product
+ * @property-read \App\Models\Shop\Product|null $product
  * @method static \Database\Factories\Shop\ProductLongDescriptionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|ProductLongDescription newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductLongDescription newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductLongDescription query()
- * @method static \Illuminate\Database\Eloquent\Builder|ProductLongDescription whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductLongDescription whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductLongDescription whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductLongDescription whereProductId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductLongDescription whereUpdatedAt($value)
  */
 	class ProductLongDescription extends \Eloquent {}
 }
@@ -199,23 +162,13 @@ namespace App\Models\Shop{
 /**
  * 
  *
- * @property int $id
- * @property string $name
- * @property int $product_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\ProductVariantAttribute> $attributes
  * @property-read int|null $attributes_count
- * @property-read \App\Models\Shop\Product $product
+ * @property-read \App\Models\Shop\Product|null $product
  * @method static \Database\Factories\Shop\ProductVariantFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|ProductVariant newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductVariant newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductVariant query()
- * @method static \Illuminate\Database\Eloquent\Builder|ProductVariant whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductVariant whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductVariant whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductVariant whereProductId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductVariant whereUpdatedAt($value)
  */
 	class ProductVariant extends \Eloquent {}
 }
@@ -224,23 +177,11 @@ namespace App\Models\Shop{
 /**
  * 
  *
- * @property int $id
- * @property string $name
- * @property string $price
- * @property int $product_variant_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Shop\ProductVariant|null $variant
  * @method static \Database\Factories\Shop\ProductVariantAttributeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|ProductVariantAttribute newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductVariantAttribute newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductVariantAttribute query()
- * @method static \Illuminate\Database\Eloquent\Builder|ProductVariantAttribute whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductVariantAttribute whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductVariantAttribute whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductVariantAttribute wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductVariantAttribute whereProductVariantId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductVariantAttribute whereUpdatedAt($value)
  */
 	class ProductVariantAttribute extends \Eloquent {}
 }

@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Filament\Resources\CategoryResource\RelationManagers\SubcategoriesRelationManager;
 use App\Models\Category;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
@@ -78,7 +77,8 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            SubcategoriesRelationManager::class,
+            RelationManagers\SubcategoriesRelationManager::class,
+            RelationManagers\ProductsRelationManager::class,
         ];
     }
 

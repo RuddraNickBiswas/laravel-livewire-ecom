@@ -19,13 +19,16 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('brand_id')->nullable()->constrained('brands')->cascadeOnDelete();
             $table->integer('qty');
+            $table->string('sku');
             $table->text('description');
+            $table->double('cost');
             $table->double('price');
             $table->double('discounted_price')->nullable();
             $table->boolean('is_active')->default(false);
             $table->boolean('is_approved')->default(false);
             $table->string('seo_title')->nullable();
             $table->text('seo_description')->nullable();
+            $table->softDeletes('deleted_at', precision: 0);
             $table->timestamps();
         });
     }
