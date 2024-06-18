@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Brand;
+
+use App\Models\Shop\Brand;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;

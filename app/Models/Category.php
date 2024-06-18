@@ -34,6 +34,10 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_id')->with('subcategories');
     }
+    public function scopeSelectable($query)
+    {
+        return $query->whereDoesntHave('children');
+    }
 
     public function getDescendantsAndSelf()
     {
@@ -44,6 +48,11 @@ class Category extends Model
         }
 
         return $descendants;
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'category_product');
     }
 
 }

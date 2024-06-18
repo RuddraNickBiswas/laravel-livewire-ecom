@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Shop\Product;
 use App\Models\Test;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -31,9 +32,11 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
             CategoryGroupSeeder::class,
             CategorySeeder::class,
-            ]);
+        ]);
 
-            // Check if categories are seeded correctly
+        // Check if categories are seeded correctly
+        Product::factory()->withCategories()->withVariants()->count(50)->create();
+        // Check if categories are seeded correctly
         if (Category::count() > 0) {
             Test::factory(9)->create();
         } else {
