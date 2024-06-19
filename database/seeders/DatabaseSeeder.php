@@ -10,9 +10,13 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Output\ConsoleOutput;
+
+
 class DatabaseSeeder extends Seeder
 {
-    /**
+     /**
      * Seed the application's database.
      */
     public function run(): void
@@ -37,14 +41,43 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Check if categories are seeded correctly
-        Product::factory()->withLongDescription()->withCategories()->withVariants()->count(5000)->create();
+        $this->seedWithProgress(Product::class, 5000, function () {
+            return Product::factory()->withLongDescription()->withCategories()->withVariants();
+        });
 
-        Order::factory()->count(10000)->create();
-        // Check if categories are seeded correctly
+        $this->seedWithProgress(Order::class, 10000, function () {
+            return Order::factory();
+        });
+
         if (Category::count() > 0) {
-            Test::factory(9)->create();
+            $this->seedWithProgress(Test::class, 9, function () {
+                return Test::factory();
+            });
         } else {
             $this->command->info('No categories found! Make sure CategorySeeder is working.');
         }
+    }
+
+    /**
+     * Seed the given factory with progress bar.
+     *
+     * @param string $model
+     * @param int $count
+     * @param \Closure $factoryCallback
+     */
+    protected function seedWithProgress(string $model, int $count, \Closure $factoryCallback)
+    {
+        $output = new ConsoleOutput();
+        $progressBar = new ProgressBar($output, $count);
+
+        $progressBar->start();
+
+        for ($i = 0; $i < $count; $i++) {
+            $factoryCallback()->create();
+            $progressBar->advance();
+        }
+
+        $progressBar->finish();
+        $output->writeln('');  // Ensure we get to a new line after the progress bar finishes
     }
 }
