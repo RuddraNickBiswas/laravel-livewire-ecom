@@ -26,7 +26,6 @@ class OrderItemFactory extends Factory
         $unitPrice = $product->discounted_price ?? $product->price;
 
         return [
-            'name' => $product->name,
             'order_id' => Order::factory(),
             'product_id' => $product->id,
             'unit_price' => $unitPrice,

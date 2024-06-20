@@ -7,9 +7,10 @@ use App\Models\Shop\Order;
 use App\Models\Shop\Product;
 use App\Models\Test;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use InvalidArgumentException;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -41,11 +42,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Check if categories are seeded correctly
-        $this->seedWithProgress(Product::class, 5000, function () {
+        $this->seedWithProgress(Product::class, 50, function () {
             return Product::factory()->withLongDescription()->withCategories()->withVariants();
         });
 
-        $this->seedWithProgress(Order::class, 10000, function () {
+        $this->seedWithProgress(Order::class, 100, function () {
             return Order::factory();
         });
 
@@ -65,10 +66,22 @@ class DatabaseSeeder extends Seeder
      * @param int $count
      * @param \Closure $factoryCallback
      */
-    protected function seedWithProgress(string $model, int $count, \Closure $factoryCallback)
+    protected function seedWithProgress(string $modelClass, int $count, \Closure $factoryCallback)
     {
+        // Ensure the class exists and is a valid model
+        if (!class_exists($modelClass) || !is_subclass_of($modelClass, Model::class)) {
+            throw new InvalidArgumentException("Invalid model class provided.");
+        }
+
+
+        $modelInstance = new $modelClass;
+        $tableName = $modelInstance->getTable();
+
         $output = new ConsoleOutput();
         $progressBar = new ProgressBar($output, $count);
+
+
+        $output->writeln("Seeding table: $tableName");
 
         $progressBar->start();
 
@@ -78,6 +91,6 @@ class DatabaseSeeder extends Seeder
         }
 
         $progressBar->finish();
-        $output->writeln('');  // Ensure we get to a new line after the progress bar finishes
+        $output->writeln("");
     }
 }
