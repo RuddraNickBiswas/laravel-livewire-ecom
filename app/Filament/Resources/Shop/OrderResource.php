@@ -29,6 +29,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Collection;
 
@@ -36,7 +37,15 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $recordTitleAttribute = 'invoice_id';
+
+
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+
+
+    protected static ?string $navigationGroup = 'Shop';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
@@ -119,8 +128,8 @@ class OrderResource extends Resource
                     ->summarize(
                         Tables\Columns\Summarizers\Sum::make()
                             ->money()
-                    ) ,
-                    TextColumn::make('delivery_charge')
+                    ),
+                TextColumn::make('delivery_charge')
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
@@ -194,6 +203,41 @@ class OrderResource extends Resource
             'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
     }
+
+
+    /** @return Builder<Order> */
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScope(SoftDeletingScope::class);
+    }
+
+    // public static function getGloballySearchableAttributes(): array
+    // {
+    //     return ['number', 'customer.name'];
+    // }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Total Price' => $record->total_price,
+            'Owner' => $record->owner->name,
+        ];
+    }
+
+    /** @return Builder<Order> */
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['orderItems']);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        /** @var class-string<Model> $modelClass */
+        $modelClass = static::$model;
+
+        return (string) $modelClass::where('status', 'new')->count();
+    }
+
 
 
     /** @return Forms\Components\Component[] */

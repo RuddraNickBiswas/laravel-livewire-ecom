@@ -24,13 +24,14 @@ class OrderItemFactory extends Factory
         // Select a random product
         $product = Product::inRandomOrder()->first();
         $unitPrice = $product->discounted_price ?? $product->price;
-
+        $productVariant =  $product->variants()->inRandomOrder()->first();
+        $productVariantAttribute = $productVariant->attributes()->inRandomOrder()->first();
         return [
             'order_id' => Order::factory(),
             'product_id' => $product->id,
             'unit_price' => $unitPrice,
             'qty' => $this->faker->numberBetween(1, 10),
-            'options' => null,
+            'options' => [['variant_name' => $productVariant->name, 'variant_attribute_name' => $productVariantAttribute->name,]],
             'created_at' => now(),
             'updated_at' => now(),
         ];

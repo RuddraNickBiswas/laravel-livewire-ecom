@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
+use App\Models\Shop\Category;
 use App\Models\Shop\Order;
 use App\Models\Shop\Product;
 use App\Models\Test;
@@ -50,13 +50,13 @@ class DatabaseSeeder extends Seeder
             return Order::factory();
         });
 
-        if (Category::count() > 0) {
-            $this->seedWithProgress(Test::class, 9, function () {
-                return Test::factory();
-            });
-        } else {
-            $this->command->info('No categories found! Make sure CategorySeeder is working.');
-        }
+        // if (Category::count() > 0) {
+        //     $this->seedWithProgress(Test::class, 9, function () {
+        //         return Test::factory();
+        //     });
+        // } else {
+        //     $this->command->info('No categories found! Make sure CategorySeeder is working.');
+        // }
     }
 
     /**

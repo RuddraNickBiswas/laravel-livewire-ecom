@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Shop;
 
-use App\Models\Category;
+use App\Models\Shop\Category;
 use App\Models\Shop\Brand;
 use App\Models\Shop\Product;
 use App\Models\Shop\ProductVariant;
