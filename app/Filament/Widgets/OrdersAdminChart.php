@@ -12,23 +12,37 @@ use Illuminate\Support\Carbon;
 class OrdersAdminChart extends ChartWidget
 {
     use InteractsWithPageFilters;
+
+    protected static ?string $heading = "Total order placed";
+
     protected static ?int $sort = 2;
-    protected static ?string $heading = 'Chart';
+
     protected static string $color = 'info';
+
 
     protected function getData(): array
     {
 
+
         $start = $this->filters['startDate'];
         $end = $this->filters['endDate'];
 
-        $data = Trend::model(Order::class)
-        ->between(
-            start: $start ? Carbon::parse($start) : now()->subYear(),
-            end: $end ? Carbon::parse($end) : now(),
-        )
-        ->perMonth()
-        ->count();
+        $startDate = $start ? Carbon::parse($start) : now()->subYear();
+        $endDate = $end ? Carbon::parse($end) : now();
+
+        $diffInMonths = $startDate->diffInMonths($endDate);
+
+        $dataQuery = Trend::model(Order::class)
+            ->between(
+                start: $startDate,
+                end: $endDate,
+            );
+
+        if ($diffInMonths < 3) {
+            $data = $dataQuery->perDay()->count();
+        } else {
+            $data = $dataQuery->perMonth()->count();
+        }
 
     return [
         'datasets' => [

@@ -13,7 +13,7 @@ class ProductsAdminChart extends ChartWidget
 {
     use InteractsWithPageFilters;
     protected static ?int $sort = 2;
-    protected static ?string $heading = 'Chart';
+    protected static ?string $heading = 'Total product added';
     protected static string $color = 'primary';
 
 
@@ -23,13 +23,23 @@ class ProductsAdminChart extends ChartWidget
         $start = $this->filters['startDate'];
         $end = $this->filters['endDate'];
 
-        $data = Trend::model(Product::class)
-        ->between(
-            start: $start ? Carbon::parse($start) : now()->subYear(),
-            end: $end ? Carbon::parse($end) : now(),
-        )
-        ->perMonth()
-        ->count();
+        $startDate = $start ? Carbon::parse($start) : now()->subYear();
+        $endDate = $end ? Carbon::parse($end) : now();
+
+        $diffInMonths = $startDate->diffInMonths($endDate);
+
+        $dataQuery = Trend::model(Product::class)
+            ->between(
+                start: $startDate,
+                end: $endDate,
+            );
+
+        if ($diffInMonths < 3) {
+            $data = $dataQuery->perDay()->count();
+        } else {
+            $data = $dataQuery->perMonth()->count();
+        }
+
 
     return [
         'datasets' => [

@@ -18,6 +18,7 @@ use Filament\Tables\Table;
 use App\Forms\Components\AddressForm;
 use App\Models\Shop\OrderCity;
 use App\Models\Shop\ProductVariant;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
@@ -28,6 +29,7 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -119,8 +121,10 @@ class OrderResource extends Resource
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('status')
-                    ->badge(),
+                TextColumn::make('status')
+                    ->badge()
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('total_price')
                     ->numeric()
                     ->sortable()
@@ -161,7 +165,7 @@ class OrderResource extends Resource
                 TextColumn::make('currency_code')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('status'),
+
                 TextColumn::make('payment_approve_date')
                     ->dateTime()
                     ->sortable()
@@ -176,7 +180,36 @@ class OrderResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Filter::make('price')
+                    ->form([
+                        TextInput::make('price_min')
+                            ->numeric(),
+                        TextInput::make('price_max')
+                            ->numeric(),
+                    ])
+                    ->query(
+                        function (Builder $query, array $data): Builder {
+                            return $query
+                                ->when($data['price_min'], fn (Builder $query, $price): Builder => $query->where('total_price', '>=', $price))
+                                ->when($data['price_max'], fn (Builder $query, $price): Builder => $query->where('total_price', '<=', $price));
+                        }
+                    ),
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -194,6 +227,15 @@ class OrderResource extends Resource
             //
         ];
     }
+
+    public static function getWidgets(): array
+    {
+        return [
+            OrderResource\Widgets\StatsOrdersOverview::class,
+        ];
+    }
+
+
 
     public static function getPages(): array
     {
