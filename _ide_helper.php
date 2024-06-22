@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 11.10.0.
+ * Generated for Laravel 11.11.1.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -4007,7 +4007,7 @@ namespace Illuminate\Support\Facades {
                     /**
          * Get the event dispatcher instance.
          *
-         * @return \Illuminate\Contracts\Events\Dispatcher 
+         * @return \Illuminate\Contracts\Events\Dispatcher|null 
          * @static 
          */        public static function getEventDispatcher()
         {
@@ -15269,6 +15269,16 @@ namespace Illuminate\Support\Facades {
          *
          * @return string 
          * @static 
+         */        public static function id()
+        {
+                        /** @var \Illuminate\Session\Store $instance */
+                        return $instance->id();
+        }
+                    /**
+         * Get the current session ID.
+         *
+         * @return string 
+         * @static 
          */        public static function getId()
         {
                         /** @var \Illuminate\Session\Store $instance */
@@ -19846,6 +19856,18 @@ namespace Livewire\Features\SupportTesting {
                     /**
          * 
          *
+         * @see \Filament\Forms\Testing\TestsForms::assertFormComponentDoesNotExist()
+         * @param string $componentKey
+         * @param string $formName
+         * @return static 
+         * @static 
+         */        public static function assertFormComponentDoesNotExist($componentKey, $formName = 'form')
+        {
+                        return \Livewire\Features\SupportTesting\Testable::assertFormComponentDoesNotExist($componentKey, $formName);
+        }
+                    /**
+         * 
+         *
          * @see \Filament\Forms\Testing\TestsForms::assertFormFieldExists()
          * @param string $fieldName
          * @param \Closure|string $formName
@@ -19855,6 +19877,18 @@ namespace Livewire\Features\SupportTesting {
          */        public static function assertFormFieldExists($fieldName, $formName = 'form', $checkFieldUsing = null)
         {
                         return \Livewire\Features\SupportTesting\Testable::assertFormFieldExists($fieldName, $formName, $checkFieldUsing);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Forms\Testing\TestsForms::assertFormFieldDoesNotExist()
+         * @param string $fieldName
+         * @param string $formName
+         * @return static 
+         * @static 
+         */        public static function assertFormFieldDoesNotExist($fieldName, $formName = 'form')
+        {
+                        return \Livewire\Features\SupportTesting\Testable::assertFormFieldDoesNotExist($fieldName, $formName);
         }
                     /**
          * 
@@ -23758,7 +23792,7 @@ namespace  {
                             /**
              * Set the table which the query is targeting.
              *
-             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $table
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|\Illuminate\Contracts\Database\Query\Expression|string $table
              * @param string|null $as
              * @return \Illuminate\Database\Query\Builder 
              * @static 

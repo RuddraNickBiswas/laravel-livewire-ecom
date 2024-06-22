@@ -2,7 +2,7 @@
 
 namespace App\Models\Shop;
 
-use App\Models\Category;
+use App\Models\Shop\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

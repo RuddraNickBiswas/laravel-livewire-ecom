@@ -30,13 +30,21 @@ use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?string $navigationIcon = 'heroicon-o-squares-plus';
+
+
+    protected static ?string $navigationGroup = 'Shop';
+
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
@@ -165,6 +173,8 @@ class ProductResource extends Resource
                     ->searchable()
                     ->toggleable(),
                 CheckboxColumn::make('is_active')
+                    ->label(__("Active"))
+                    ->sortable()
                     ->toggleable(),
                 TextColumn::make('created_at')
                     ->sortable()
@@ -240,7 +250,7 @@ class ProductResource extends Resource
 
 
 
-            ], )
+            ],)
             ->actions([
 
                 \Filament\Tables\Actions\ActionGroup::make([
@@ -273,6 +283,13 @@ class ProductResource extends Resource
             'create' => Pages\CreateProduct::route('/create'),
             'view' => Pages\ViewProduct::route('/{record}'),
             'edit' => Pages\EditProduct::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Price' => $record->price,
         ];
     }
 }
