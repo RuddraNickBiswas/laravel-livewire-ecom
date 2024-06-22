@@ -4,6 +4,7 @@ namespace Database\Factories\Shop;
 
 use App\Models\Shop\Order;
 use App\Models\Shop\OrderCity;
+use App\Models\Shop\OrderDistrict;
 use App\Models\Shop\OrderItem;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,32 +21,33 @@ class OrderFactory extends Factory
      */
     public function definition(): array
     {
-           // Generate a random date within the last 2 years
-           $createdAt = fake()->dateTimeBetween('-2 years', 'now');
-           $user = User::inRandomOrder()->first();
-           $orderCity = OrderCity::inRandomOrder()->first();
+        // Generate a random date within the last 2 years
+        $createdAt = fake()->dateTimeBetween('-2 years', 'now');
+        $user = User::inRandomOrder()->first();
+        $orderDistrict = OrderDistrict::inRandomOrder()->first();
+        $orderCity = $orderDistrict->orderCities()->inRandomOrder()->first();
         return [
             'invoice_id' => generateInvoiceId(),
             'name' => fake()->name,
             'email' => fake()->unique()->safeEmail,
             'phone' => fake()->phoneNumber,
             'user_id' => $user->id,
-            'qty' => 0, // This will be updated in the logic
             'total_price' => 0.00, // This will be calculated
             'delivery_charge' => 0.00, // This will be calculated
+            'delivery_district_id' => $orderDistrict->id,
+            'status' => fake()->randomElement(['new', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded']),
             'delivery_city_id' => $orderCity->id,
-            'delivery_address' => $this->faker->address,
-            'payment_method' => $this->faker->randomElement(['credit_card', 'paypal', 'bank_transfer']),
-            'payment_status' => 'incomplete',
+            'delivery_address' => fake()->address,
+            'payment_method' => fake()->randomElement(['credit_card', 'paypal', 'bank_transfer']),
+            'payment_status' => fake()->randomElement(['incomplete', 'completed', 'failed', 'refunded', 'verified']),
             'transaction_id' => null,
             'coupon_id' => null,
             'currency_code' => 'USD',
-            'status' => 'pending',
             'payment_approve_date' => null,
-            'created_at' =>$createdAt,
+            'notes' => fake()->text(200),
+            'created_at' => $createdAt,
             'updated_at' => $createdAt,
         ];
-
     }
     public function configure()
     {
@@ -63,7 +65,6 @@ class OrderFactory extends Factory
             $deliveryCharge = OrderCity::find($order->delivery_city_id)->delivery_charge;
 
             $order->update([
-                'qty' => $totalQty,
                 'total_price' => $totalPrice,
                 'delivery_charge' => $deliveryCharge,
             ]);
