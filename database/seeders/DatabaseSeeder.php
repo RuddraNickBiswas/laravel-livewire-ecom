@@ -22,17 +22,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'User',
-            'email' => 'user@example.com',
-        ]);
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
             'role' => 'admin'
         ]);
+        User::factory()->create([
+            'name' => 'User',
+            'email' => 'user@example.com',
+        ]);
+        User::factory(6)->create();
 
         $this->call([
             BrandSeeder::class,
@@ -42,11 +42,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Check if categories are seeded correctly
-        $this->seedWithProgress(Product::class, 1000, function () {
+        $this->seedWithProgress(Product::class, 100, function () {
             return Product::factory()->withLongDescription()->withCategories()->withVariants();
         });
 
-        $this->seedWithProgress(Order::class, 5000, function () {
+        $this->seedWithProgress(Order::class, 500, function () {
             return Order::factory();
         });
 

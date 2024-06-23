@@ -23,7 +23,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         // Generate a random date within the last 2 years
-        $createdAt = $this->faker->dateTimeBetween('-2 years', 'now');
+        $createdAt = $this->faker->dateTimeBetween('-1 years', 'now');
 
         return [
             'name' => fake()->text(100),

@@ -3,15 +3,20 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use BezhanSalleh\FilamentShield\Support\Utils;
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
+use Filament\Models\Contracts\FilamentUser;
+use FilamentShield;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
-
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasFactory;
@@ -19,6 +24,8 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+    use HasRoles;
+    // use HasPanelShield;
     /**
      * The attributes that are mass assignable.
      *
@@ -67,9 +74,33 @@ class User extends Authenticatable
 
     public function getRedirectRoute(): string
     {
-        return match((string)$this->role) {
+        return match ((string)$this->role) {
             'user' => 'home',
             'admin' => 'admin.dashboard',
         };
+    }
+
+    protected static function booted(): void
+    {
+        if (config('filament-shield.shop_user.enabled', false)) {
+            FilamentShield::createRole(name: config('filament-shield.shop_user.name', 'shop_user'));
+            static::created(function (User $user) {
+                $user->assignRole(config('filament-shield.shop_user.name', 'shop_user'));
+            });
+            static::deleting(function (User $user) {
+                $user->removeRole(config('filament-shield.shop_user.name', 'shop_user'));
+            });
+        }
+    }
+
+    public function canAccessPanel(\Filament\Panel $panel): bool
+    {
+        if($panel->getId() === 'admin'){
+            return $this->hasRole(config('filament-shield.super_admin.name', 'super_admin')) || $this->hasRole('shop_user');
+        }elseif($panel->getId() === 'shop'){
+            return $this->hasRole(config('filament-shield.super_admin.name', 'super_admin')) || $this->hasRole(config('filament-shield.shop_user.name', 'shop_user'));
+        }else{
+            return false;
+        }
     }
 }
