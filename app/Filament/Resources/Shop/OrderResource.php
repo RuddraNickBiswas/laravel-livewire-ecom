@@ -218,6 +218,11 @@ class OrderResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])->groups([
+                Tables\Grouping\Group::make('created_at')
+                    ->label('Order Date')
+                    ->date()
+                    ->collapsible(),
             ]);
     }
 

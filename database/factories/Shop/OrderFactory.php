@@ -22,7 +22,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         // Generate a random date within the last 2 years
-        $createdAt = fake()->dateTimeBetween('-2 years', 'now');
+        $createdAt = fake()->dateTimeBetween('-1 years', 'now');
         $user = User::inRandomOrder()->first();
         $orderDistrict = OrderDistrict::inRandomOrder()->first();
         $orderCity = $orderDistrict->orderCities()->inRandomOrder()->first();

@@ -27,3 +27,31 @@ if (!function_exists('generateInvoiceId')) {
         return $invoiceId;
     }
 }
+
+
+if (!function_exists('currencyPosition')) {
+    function currencyPosition($price)
+    {
+        if (config('settings.site_currency_position') === 'right') {
+
+            return  $price . config('settings.site_currency_symbol');
+        } else if (config('settings.site_currency_position') === 'left') {
+
+            return  config('settings.site_currency_symbol') . $price;
+        }
+    }
+}
+
+
+    if (!function_exists('currencyPositionDemo')) {
+    function currencyPositionDemo($price)
+    {
+        if (true) {
+
+            return  $price . '$';
+        } else if (config('settings.site_currency_position') === 'left') {
+
+            return  config('settings.site_currency_symbol') . $price;
+        }
+    }
+}
