@@ -239,6 +239,7 @@ namespace App\Models\Shop{
  * @property string $thumbnail
  * @property int $user_id
  * @property int|null $brand_id
+ * @property int $shop_id
  * @property int $qty
  * @property string $sku
  * @property string $description
@@ -259,6 +260,7 @@ namespace App\Models\Shop{
  * @property-read int|null $images_count
  * @property-read \App\Models\Shop\ProductLongDescription|null $longDescription
  * @property-read \App\Models\User $owner
+ * @property-read \App\Models\User $shop
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\ProductVariant> $variants
  * @property-read int|null $variants_count
  * @method static \Database\Factories\Shop\ProductFactory factory($count = null, $state = [])
@@ -280,6 +282,7 @@ namespace App\Models\Shop{
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereQty($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereSeoDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereSeoTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereShopId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereSku($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereThumbnail($value)
@@ -387,6 +390,32 @@ namespace App\Models\Shop{
 	class ProductVariantAttribute extends \Eloquent {}
 }
 
+namespace App\Models\Shop{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $members
+ * @property-read int|null $members_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\Product> $products
+ * @property-read int|null $products_count
+ * @method static \Database\Factories\Shop\ShopFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop whereUpdatedAt($value)
+ */
+	class Shop extends \Eloquent {}
+}
+
 namespace App\Models{
 /**
  * 
@@ -450,6 +479,8 @@ namespace App\Models{
  * @property-read string $profile_photo_url
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\Shop> $shops
+ * @property-read int|null $shops_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
@@ -475,6 +506,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder|User withoutRole($roles, $guard = null)
  */
-	class User extends \Eloquent implements \Filament\Models\Contracts\FilamentUser {}
+	class User extends \Eloquent implements \Filament\Models\Contracts\FilamentUser, \Filament\Models\Contracts\HasTenants {}
 }
 

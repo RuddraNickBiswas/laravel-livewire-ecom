@@ -4,19 +4,24 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Shop\Shop;
 use BezhanSalleh\FilamentShield\Support\Utils;
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasTenants;
 use FilamentShield;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasTenants
 {
     use HasApiTokens;
     use HasFactory;
@@ -96,11 +101,25 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(\Filament\Panel $panel): bool
     {
         if($panel->getId() === 'admin'){
-            return $this->hasRole(config('filament-shield.super_admin.name', 'super_admin')) || $this->hasRole('shop_user');
+            return $this->hasRole(config('filament-shield.super_admin.name', 'super_admin'));
         }elseif($panel->getId() === 'shop'){
             return $this->hasRole(config('filament-shield.super_admin.name', 'super_admin')) || $this->hasRole(config('filament-shield.shop_user.name', 'shop_user'));
         }else{
             return false;
         }
+    }
+    public function shops(): BelongsToMany
+    {
+        return $this->belongsToMany(Shop::class);
+    }
+
+    public function getTenants(\Filament\Panel $panel): Collection
+    {
+        return $this->shops;
+    }
+
+    public function canAccessTenant(Model $tenant): bool
+    {
+        return $this->shops()->whereKey($tenant)->exists();
     }
 }

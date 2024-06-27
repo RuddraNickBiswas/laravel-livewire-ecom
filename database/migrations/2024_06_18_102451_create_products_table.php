@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('thumbnail');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('brand_id')->nullable()->constrained('brands')->cascadeOnDelete();
+            $table->foreignId('shop_id')->constrained('brands')->cascadeOnDelete();
             $table->integer('qty');
             $table->string('sku');
             $table->text('description');

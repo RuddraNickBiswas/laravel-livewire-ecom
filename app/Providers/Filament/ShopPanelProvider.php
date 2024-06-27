@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Shop\Pages\Tenancy\EditShopProfile;
+use App\Filament\Shop\Pages\Tenancy\RegisterShop;
+use App\Models\Shop\Shop;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -53,7 +56,9 @@ class ShopPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
-            ]);
+
+            ])->tenant(Shop::class, ownershipRelationship: "shop" ,slugAttribute:'slug')
+            ->tenantRegistration(RegisterShop::class)
+            ->tenantProfile(EditShopProfile::class);
     }
 }
