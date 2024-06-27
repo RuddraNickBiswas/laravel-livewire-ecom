@@ -7,6 +7,7 @@ use App\Models\Shop\Brand;
 use App\Models\Shop\Product;
 use App\Models\Shop\ProductVariant;
 use App\Models\Shop\ProductVariantAttribute;
+use App\Models\Shop\Shop;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -31,6 +32,7 @@ class ProductFactory extends Factory
             'thumbnail' => fake()->imageUrl(1280, 720), // 16:9 ratio
             'user_id' => User::inRandomOrder()->first()->id,
             'brand_id' =>  Brand::inRandomOrder()->first()->id,
+            'shop_id' =>  Shop::inRandomOrder()->first()->id,
             'qty' => fake()->numberBetween(1, 100),
             'sku' => fake()->slug,
             'description' => fake()->paragraph,

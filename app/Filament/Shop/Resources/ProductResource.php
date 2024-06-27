@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\Shop;
+namespace App\Filament\Shop\Resources;
 
-use App\Filament\Resources\Shop\ProductResource\Pages;
-use App\Filament\Resources\Shop\ProductResource\RelationManagers;
+use App\Filament\Shop\Resources\ProductResource\Pages;
+use App\Filament\Shop\Resources\ProductResource\RelationManagers;
 use App\Models\Shop\Category;
 use App\Models\Shop\Product;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
@@ -26,25 +26,15 @@ use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $recordTitleAttribute = 'name';
-
-    protected static ?string $navigationIcon = 'heroicon-o-squares-plus';
-
-
-    protected static ?string $navigationGroup = 'Shop';
-
-    protected static ?int $navigationSort = 4;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -151,6 +141,11 @@ class ProductResource extends Resource
                 ImageColumn::make('thumbnail')
                     ->disk('products'),
                 TextColumn::make('name')
+                    ->limit(50)
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(),
+                    TextColumn::make('shop.name')
                     ->limit(50)
                     ->sortable()
                     ->searchable()
@@ -268,11 +263,11 @@ class ProductResource extends Resource
             ]);
     }
 
+
     public static function getRelations(): array
     {
         return [
-            RelationManagers\VariantsRelationManager::class,
-            RelationManagers\ImagesRelationManager::class,
+            //
         ];
     }
 
@@ -281,15 +276,7 @@ class ProductResource extends Resource
         return [
             'index' => Pages\ListProducts::route('/'),
             'create' => Pages\CreateProduct::route('/create'),
-            'view' => Pages\ViewProduct::route('/{record}'),
             'edit' => Pages\EditProduct::route('/{record}/edit'),
-        ];
-    }
-
-    public static function getGlobalSearchResultDetails(Model $record): array
-    {
-        return [
-            'Price' => $record->price,
         ];
     }
 }
