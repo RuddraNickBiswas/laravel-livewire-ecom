@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('products');
+            $table->double('total_price');
             $table->double('unit_price');
             $table->integer('qty');
             $table->json('options')->nullable();

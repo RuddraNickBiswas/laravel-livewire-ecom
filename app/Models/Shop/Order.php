@@ -45,4 +45,16 @@ class Order extends Model
         {
             return $this->belongsTo(OrderCity::class, 'delivery_city_id');
         }
+
+        public function shop()
+        {
+            return $this->belongsTo(Shop::class);
+        }
+
+        public function orderGroup()
+        {
+            return $this->belongsTo(OrderGroup::class);
+        }
+
+
 }

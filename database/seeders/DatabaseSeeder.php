@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Shop\Category;
 use App\Models\Shop\Order;
+use App\Models\Shop\OrderGroup;
 use App\Models\Shop\Product;
 use App\Models\Test;
 use App\Models\User;
@@ -43,12 +44,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Check if categories are seeded correctly
-        $this->seedWithProgress(Product::class, 100, function () {
+        $this->seedWithProgress(Product::class, 50, function () {
             return Product::factory()->withLongDescription()->withCategories()->withVariants();
         });
 
-        $this->seedWithProgress(Order::class, 500, function () {
-            return Order::factory();
+
+
+        $this->seedWithProgress(OrderGroup::class, 100, function () {
+            return OrderGroup::factory();
         });
 
         // if (Category::count() > 0) {

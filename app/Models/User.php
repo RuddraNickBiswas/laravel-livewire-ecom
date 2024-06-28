@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Shop\OrderGroup;
+use App\Models\Shop\Product;
 use App\Models\Shop\Shop;
 use BezhanSalleh\FilamentShield\Support\Utils;
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
@@ -121,5 +123,16 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     public function canAccessTenant(Model $tenant): bool
     {
         return $this->shops()->whereKey($tenant)->exists();
+    }
+
+
+    public function orderGroups()
+    {
+        return $this->hasMany(OrderGroup::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }
