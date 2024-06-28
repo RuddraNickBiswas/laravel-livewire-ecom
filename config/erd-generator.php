@@ -40,7 +40,7 @@ return [
      * Set this to false if you prefer to explicitly define each directory that should
      * be scanned for models.
      */
-    'recursive' => false,
+    'recursive' => true,
 
     /*
      * The generator will automatically try to look up the model specific columns
