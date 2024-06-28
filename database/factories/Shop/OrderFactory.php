@@ -25,7 +25,7 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-            'shop_id' => Shop::factory(),
+            'shop_id' => 1,// This will be calculated later
             'total_price' => 0, // This will be calculated later
             'delivery_charge' => $this->faker->randomFloat(2, 5, 20),
             'coupon_id' => null,

@@ -2,6 +2,8 @@
 
 namespace App\Models\Shop;
 
+use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +13,14 @@ class OrderGroup extends Model
 {
     use HasFactory;
 
+    protected $guarded =[];
+
+    protected function casts(): array
+    {
+        return [
+            'payment_status' => PaymentStatus::class,
+        ];
+    }
 
     public function user()
     {

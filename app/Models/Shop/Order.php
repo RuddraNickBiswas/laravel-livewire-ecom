@@ -22,7 +22,6 @@ class Order extends Model
     {
         return [
             'status' => OrderStatus::class,
-            'payment_status' => PaymentStatus::class,
         ];
     }
 

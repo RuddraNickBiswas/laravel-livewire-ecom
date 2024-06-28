@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-
             $table->foreignId('shop_id')->constrained('shops')->cascadeOnDelete();
             $table->foreignId('order_group_id')->constrained('order_groups')->cascadeOnDelete();
             $table->decimal('total_price', 10, 2);
