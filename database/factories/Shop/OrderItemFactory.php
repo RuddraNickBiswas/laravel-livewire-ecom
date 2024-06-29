@@ -21,19 +21,13 @@ class OrderItemFactory extends Factory
 
     public function definition()
     {
-        // Select a random product
-        $product = Product::inRandomOrder()->first();
-        $unitPrice = $product->discounted_price ?? $product->price;
-        $productVariant =  $product->variants()->inRandomOrder()->first();
-        $productVariantAttribute = $productVariant->attributes()->inRandomOrder()->first();
         return [
-            'order_id' => Order::factory(),
-            'product_id' => $product->id,
-            'unit_price' => $unitPrice,
+            'order_id' => null, // This will be set in the afterCreating method of OrderGroupFactory
+            'product_id' => null, // This will be set in the afterCreating method of OrderGroupFactory
+            'total_price' => 0, // This will be set based on the product price
+            'unit_price' => 0, // This will be set based on the product price
             'qty' => $this->faker->numberBetween(1, 10),
-            'options' => [['variant_name' => $productVariant->name, 'variant_attribute_name' => $productVariantAttribute->name,]],
-            'created_at' => now(),
-            'updated_at' => now(),
+            'options' => null,
         ];
     }
 }

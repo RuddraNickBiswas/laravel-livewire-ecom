@@ -2,7 +2,9 @@
 
 namespace App\Filament\Widgets;
 
+use App\Helpers\Filament\WidgetsDataQueryHelper;
 use App\Models\Shop\Product;
+use App\Traits\Filament\GetChartWidgetsDataQuery;
 use Filament\Widgets\ChartWidget;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Flowframe\Trend\Trend;
@@ -11,7 +13,7 @@ use Illuminate\Support\Carbon;
 
 class ProductsAdminChart extends ChartWidget
 {
-    use InteractsWithPageFilters;
+    use InteractsWithPageFilters , GetChartWidgetsDataQuery;
     protected static ?int $sort = 2;
     protected static ?string $heading = 'Total product added';
     protected static string $color = 'primary';
@@ -19,36 +21,18 @@ class ProductsAdminChart extends ChartWidget
 
     protected function getData(): array
     {
+        $filters = $this->filters;
 
-        $start = $this->filters['startDate'];
-        $end = $this->filters['endDate'];
-
-        $startDate = $start ? Carbon::parse($start) : now()->subYear();
-        $endDate = $end ? Carbon::parse($end) : now();
-
-        $diffInMonths = $startDate->diffInMonths($endDate);
-
-        $dataQuery = Trend::model(Product::class)
-            ->between(
-                start: $startDate,
-                end: $endDate,
-            );
-
-        if ($diffInMonths < 3) {
-            $data = $dataQuery->perDay()->count();
-        } else {
-            $data = $dataQuery->perMonth()->count();
-        }
-
+        $data = $this->getChartWidgetsDataQuery(Product::query(), $filters, );
 
     return [
         'datasets' => [
             [
-                'label' => 'Orders',
-                'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
+                'label' => 'Products',
+                'data' => $data->pluck('aggregate'),
             ],
         ],
-        'labels' => $data->map(fn (TrendValue $value) => $value->date),
+        'labels' => $data->pluck('date'),
     ];
     }
 

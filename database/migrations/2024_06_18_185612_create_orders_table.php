@@ -13,28 +13,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_id');
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone');
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('shop_id')->constrained('shops')->cascadeOnDelete();
+            $table->foreignId('order_group_id')->constrained('order_groups')->cascadeOnDelete();
             $table->decimal('total_price', 10, 2);
             $table->decimal('delivery_charge', 10, 2);
-    $table->unsignedBigInteger("delivery_district_id");
-            $table->unsignedBigInteger("delivery_city_id");
-            $table->string("delivery_address");
-            $table->string('payment_method');
-            $table->enum('payment_status', ['incomplete', 'completed', 'failed', 'refunded', 'verified'])->default('incomplete');
-            $table->string('transaction_id')->nullable();
             $table->string('coupon_id')->nullable();
-            $table->string('currency_code')->nullable();
             $table->text('notes')->nullable();
             $table->enum('status', ['new', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded'])->default('new');
-            $table->timestamp('payment_approve_date')->nullable();
             $table->timestamps();
-
-            $table->foreign('delivery_district_id')->references('id')->on('order_districts');
-            $table->foreign('delivery_city_id')->references('id')->on('order_cities');
         });
     }
 

@@ -122,9 +122,11 @@ namespace App\Models\Shop{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Shop\OrderCity $deliveryCity
  * @property-read \App\Models\Shop\OrderDistrict $deliveryDistrict
+ * @property-read \App\Models\Shop\OrderGroup|null $orderGroup
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\OrderItem> $orderItems
  * @property-read int|null $order_items_count
  * @property-read \App\Models\User $owner
+ * @property-read \App\Models\Shop\Shop|null $shop
  * @method static \Database\Factories\Shop\OrderFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Order newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Order newQuery()
@@ -203,6 +205,18 @@ namespace App\Models\Shop{
 /**
  * 
  *
+ * @method static \Database\Factories\Shop\OrderGroupFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderGroup newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderGroup newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderGroup query()
+ */
+	class OrderGroup extends \Eloquent {}
+}
+
+namespace App\Models\Shop{
+/**
+ * 
+ *
  * @property int $id
  * @property int $order_id
  * @property int $product_id
@@ -259,8 +273,11 @@ namespace App\Models\Shop{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\ProductImage> $images
  * @property-read int|null $images_count
  * @property-read \App\Models\Shop\ProductLongDescription|null $longDescription
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\OrderItem> $orderItems
+ * @property-read int|null $order_items_count
  * @property-read \App\Models\User $owner
  * @property-read \App\Models\User $shop
+ * @property-read \App\Models\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\ProductVariant> $variants
  * @property-read int|null $variants_count
  * @method static \Database\Factories\Shop\ProductFactory factory($count = null, $state = [])
@@ -401,6 +418,8 @@ namespace App\Models\Shop{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $members
  * @property-read int|null $members_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\Order> $orders
+ * @property-read int|null $orders_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\Product> $products
  * @property-read int|null $products_count
  * @method static \Database\Factories\Shop\ShopFactory factory($count = null, $state = [])
@@ -474,8 +493,12 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\OrderGroup> $orderGroups
+ * @property-read int|null $order_groups_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shop\Product> $products
+ * @property-read int|null $products_count
  * @property-read string $profile_photo_url
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count

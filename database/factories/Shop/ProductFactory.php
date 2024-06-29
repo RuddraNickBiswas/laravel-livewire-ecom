@@ -30,7 +30,6 @@ class ProductFactory extends Factory
             'name' => fake()->text(100),
             'slug' => fake()->slug,
             'thumbnail' => fake()->imageUrl(1280, 720), // 16:9 ratio
-            'user_id' => User::inRandomOrder()->first()->id,
             'brand_id' =>  Brand::inRandomOrder()->first()->id,
             'shop_id' =>  Shop::inRandomOrder()->first()->id,
             'qty' => fake()->numberBetween(1, 100),

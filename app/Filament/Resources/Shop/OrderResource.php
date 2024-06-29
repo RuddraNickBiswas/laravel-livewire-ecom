@@ -39,15 +39,15 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $recordTitleAttribute = 'invoice_id';
-
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
 
-    protected static ?string $navigationGroup = 'Shop';
+    protected static ?string $navigationGroup = 'Orders';
 
-    protected static ?int $navigationSort = 5;
+    // protected static ?string $navigationParentItem = 'Order Group';
+
+    // protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
@@ -103,23 +103,28 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('invoice_id')
+                TextColumn::make('orderGroup.invoice_id')
+                    ->label(_('Invoice'))
                     ->searchable()
                     ->toggleable(),
 
-                TextColumn::make('name')
+                TextColumn::make('orderGroup.name')
+                    ->label(_('Creator Name'))
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
-                TextColumn::make('email')
+                    TextColumn::make('shop.name')
+                    // ->label(_('Creator Name'))
+                    ->searchable()
+                    ->toggleable()
+                    ->sortable(),
+                TextColumn::make('orderGroup.email')
+                    ->label(__('Email'))
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('phone')
+                TextColumn::make('orderGroup.phone')
+                    ->label(__('Phone'))
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('owner.name')
-                    ->numeric()
-                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('status')
                     ->badge()
@@ -137,38 +142,45 @@ class OrderResource extends Resource
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
-                TextColumn::make('deliveryDistrict.name')
+                TextColumn::make('orderGroup.deliveryDistrict.name')
+                    ->label(__('Delivery District'))
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('deliveryCity.name')
+                TextColumn::make('orderGroup.deliveryCity.name')
+                    ->label(__('Delivery City'))
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('delivery_address')
+                TextColumn::make('orderGroup.delivery_address')
+                    ->label(__('Delivery Address'))
                     ->searchable()
                     ->toggleable(),
                 TextColumn::make('payment_method')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('payment_status')
+                TextColumn::make('orderGroup.payment_status')
+                    ->label(__('Payment Status'))
                     ->badge()
                     ->searchable()
                     ->toggleable(),
-                TextColumn::make('transaction_id')
+                TextColumn::make('orderGroup.transaction_id')
+                    ->label(__('Transaction_id'))
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('coupon_id')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('currency_code')
+                TextColumn::make('orderGroup.currency_code')
+                    ->label(__('Currency Code'))
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('payment_approve_date')
+                TextColumn::make('orderGroup.payment_approve_date')
+                    ->label(__('Payment Approve Date'))
                     ->dateTime()
                     ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('coupon_id')
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -219,17 +231,15 @@ class OrderResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])->groups([
-                Tables\Grouping\Group::make('created_at')
-                    ->label('Order Date')
-                    ->date()
+                Tables\Grouping\Group::make('orderGroup.invoice_id')
                     ->collapsible(),
-            ]);
+            ])->defaultGroup('orderGroup.invoice_id');
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\OrderGroupRelationManager::class
         ];
     }
 
@@ -293,140 +303,35 @@ class OrderResource extends Resource
         return [
             Group::make()
                 ->schema([
-                    TextInput::make('invoice_id')
-                        ->default(generateInvoiceId())
-                        ->disabled()
-                        ->dehydrated()
-                        ->required()
-                        ->maxLength(32)
-                        ->unique(Order::class, 'invoice_id', ignoreRecord: true),
-                    Group::make()
-                        ->schema([
-                            TextInput::make('total_price')
-                                ->required()
-                                ->disabled()
-                                ->dehydrated()
-                                ->numeric(),
-                            TextInput::make('delivery_charge')
-                                ->required()
-                                ->disabled()
-                                ->dehydrated()
-                                ->numeric(),
-
-                        ])->columns()
-                ])->columns(2)->columnSpanFull(),
-            ToggleButtons::make('status')
-                ->inline()
-                ->options(OrderStatus::class)
-                ->required()
-                ->columnSpanFull(),
-            Section::make('User Information')
-                ->schema([
-
-                    Forms\Components\Select::make('user_id')
-                        ->relationship('owner', 'name')
-                        ->searchable()
-                        ->required(),
-                    // ->createOptionForm([
-                    //     Forms\Components\TextInput::make('name')
-                    //         ->required()
-                    //         ->maxLength(255),
-
-                    //     Forms\Components\TextInput::make('email')
-                    //         ->label('Email address')
-                    //         ->required()
-                    //         ->email()
-                    //         ->maxLength(255)
-                    //         ->unique(),
-
-                    //     Forms\Components\TextInput::make('phone')
-                    //         ->maxLength(255),
-
-                    // ])
-                    // ->createOptionAction(function (Action $action) {
-                    //     return $action
-                    //         ->modalHeading('Create customer')
-                    //         ->modalSubmitActionLabel('Create customer')
-                    //         ->modalWidth('lg');
-                    // }),
-
-
-                    TextInput::make('name')
-                        ->required()
-                        ->maxLength(255),
-                    TextInput::make('email')
-                        ->email()
-                        ->required()
-                        ->maxLength(255),
-                    TextInput::make('phone')
-                        ->tel()
-                        ->required(),
-                ])->columns(2)->columnSpanFull(),
-            Section::make('Delivery Area')
-                ->schema([
-                    Select::make('delivery_district_id')
-                        ->relationship(name: 'deliveryDistrict', titleAttribute: 'name')
-                        ->searchable()
-                        ->preload()
-                        ->live()
-                        ->afterStateUpdated(function (Set $set) {
-                            $set('delivery_city_id', null);
-                        })
-                        ->required(),
-                    Select::make('delivery_city_id')
-                        ->relationship(name: 'deliveryCity', titleAttribute: 'name')
-                        ->options(fn (Get $get): Collection => OrderCity::query()
-                            ->where('order_district_id', $get('delivery_district_id'))
-                            ->pluck('name', 'id'))
-                        ->searchable()
-                        ->preload()
-                        ->live()
-                        ->afterStateUpdated(function ($state, Get $get, Set $set) {
-                            $deliveryCharge = OrderCity::find($state)?->delivery_charge ?? 0;
-                            $set('delivery_charge', $deliveryCharge);
-                            self::updateTotalPrice($get, $set);
-                        }),
-
-                    TextInput::make('delivery_address')
-                        ->required()
-                        ->maxLength(255),
-                ]),
-
-            Section::make('Payment Status')
-                ->schema([
-                    ToggleButtons::make('payment_status')
+                    Select::make('shop_id')
+                        ->relationship('shop', 'name')
+                        ->disabled(),
+                    ToggleButtons::make('status')
                         ->inline()
-                        ->options(PaymentStatus::class)
+                        ->options(OrderStatus::class)
                         ->required()
                         ->columnSpanFull(),
-                    TextInput::make('payment_method')
-                        ->maxLength(255),
-                    TextInput::make('payment_status')
-                        ->maxLength(255)
-                        ->default('incomplete'),
-                    TextInput::make('transaction_id')
-                        ->maxLength(255)
-                        ->default(null),
+                    TextInput::make('total_price')
+                        ->numeric()
+                        ->disabled(),
+                    TextInput::make('delivery_charge')
+                        ->numeric()
+                        ->disabled(),
                     TextInput::make('coupon_id')
-                        ->maxLength(255)
-                        ->default(null),
-                    TextInput::make('currency_code')
-                        ->maxLength(255)
-                        ->default(null),
-                    DateTimePicker::make('payment_approve_date'),
+                        ->numeric()
+                        ->disabled(),
+                    Textarea::make('notes')
+                        ->columnSpan('full'),
                 ])
-                ->collapsible()
-                ->collapsed(),
+                ->columnSpanFull()
 
-
-            Textarea::make('notes')
-                ->columnSpan('full'),
         ];
     }
 
     public static function getItemsRepeater(): Repeater
     {
         return Repeater::make('orderItems')
+            ->disabled()
             ->relationship()
             ->schema([
                 Select::make('product_id')
@@ -467,6 +372,7 @@ class OrderResource extends Resource
                         'md' => 3,
                     ]),
                 Repeater::make('options')
+
                     ->schema([
                         Select::make('variant_name')
                             ->label('Variant')
@@ -499,8 +405,10 @@ class OrderResource extends Resource
                             ->preload()
                             ->live()
                             ->searchable(),
+                        TextInput::make('price')
+                            ->numeric()
                     ])
-                    ->columns(2)
+                    ->columns(3)
                     ->columnSpanFull()
             ])
             ->live()
