@@ -4,7 +4,7 @@ namespace App\Filament\Resources\Shop;
 
 use App\Filament\Resources\Shop\ProductResource\Pages;
 use App\Filament\Resources\Shop\ProductResource\RelationManagers;
-use App\Models\Category;
+use App\Models\Shop\Category;
 use App\Models\Shop\Product;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;

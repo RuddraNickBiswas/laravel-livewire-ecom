@@ -27,6 +27,23 @@ class Product extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class, 'shop_id');
+    }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'category_product');

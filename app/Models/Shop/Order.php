@@ -22,7 +22,6 @@ class Order extends Model
     {
         return [
             'status' => OrderStatus::class,
-            'payment_status' => PaymentStatus::class,
         ];
     }
 
@@ -45,4 +44,16 @@ class Order extends Model
         {
             return $this->belongsTo(OrderCity::class, 'delivery_city_id');
         }
+
+        public function shop()
+        {
+            return $this->belongsTo(Shop::class, 'shop_id');
+        }
+
+        public function orderGroup()
+        {
+            return $this->belongsTo(OrderGroup::class);
+        }
+
+
 }

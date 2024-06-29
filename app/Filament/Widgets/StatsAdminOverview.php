@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Shop\Order;
+use App\Models\Shop\OrderGroup;
 use App\Models\Shop\Product;
 use App\Models\User;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
@@ -46,9 +47,9 @@ class StatsAdminOverview extends BaseWidget
                 ->chart([5, 10, 15, 20, 25, 30, 35])
                 ->color('success'),
             Stat::make(
-                'Order',
+                'User Order',
                 fn () =>
-                Order::when($start, fn ($query) => $query->whereDate('created_at', '>', $start))
+                OrderGroup::when($start, fn ($query) => $query->whereDate('created_at', '>', $start))
                     ->when($end, fn ($query) => $query->whereDate('created_at', '<', $end))
                     ->count()
             )
