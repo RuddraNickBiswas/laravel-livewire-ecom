@@ -2,6 +2,9 @@
 
 namespace Database\Factories\Shop;
 
+use App\Enums\OrderGroupStatus;
+use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use App\Models\Shop\Order;
 use App\Models\Shop\OrderCity;
 use App\Models\Shop\OrderDistrict;
@@ -27,6 +30,14 @@ class OrderGroupFactory extends Factory
     public function definition()
     {
         $createdAt = $this->faker->dateTimeBetween('-1 years', 'now');
+        $paymentStatus = $this->faker->randomElement(PaymentStatus::cases());
+
+        // Determine orderGroup status based on payment status
+        $orderGroupStatus = match ($paymentStatus) {
+            PaymentStatus::Completed, PaymentStatus::Refunded => OrderGroupStatus::Verified,
+            PaymentStatus::Failed => OrderGroupStatus::Cancelled,
+            default => OrderGroupStatus::New,
+        };
 
         return [
             'invoice_id' => $this->faker->unique()->numerify('INV-#####'),
@@ -39,13 +50,13 @@ class OrderGroupFactory extends Factory
             'delivery_district_id' => OrderDistrict::inRandomOrder()->first()->id,
             'delivery_city_id' => OrderCity::inRandomOrder()->first()->id,
             'delivery_address' => $this->faker->address,
-            'payment_method' => $this->faker->randomElement(['credit_card', 'paypal', 'bank_transfer']),
-            'payment_status' => 'incomplete',
-            'transaction_id' => null,
-            'currency_code' => 'USD',
+            'payment_method' => !in_array($paymentStatus, [PaymentStatus::Incomplete, PaymentStatus::Failed]) ? $this->faker->creditCardType() : null,
+            'payment_status' => $paymentStatus,
+            'transaction_id' => !in_array($paymentStatus, [PaymentStatus::Incomplete, PaymentStatus::Failed]) ? $this->faker->uuid() : null,
+            'currency_code' => !in_array($paymentStatus, [PaymentStatus::Incomplete, PaymentStatus::Failed]) ? 'USD' : null,
             'notes' => $this->faker->paragraph,
-            'status' => 'new',
-            'payment_approve_date' => null,
+            'status' => $orderGroupStatus,
+            'payment_approve_date' => $orderGroupStatus === OrderGroupStatus::Verified ? $this->faker->dateTimeBetween($createdAt, 'now') : null,
             'created_at' => $createdAt,
             'updated_at' => $createdAt,
         ];
@@ -62,14 +73,27 @@ class OrderGroupFactory extends Factory
                 'created_at' => $orderGroup->created_at,
                 'updated_at' => $orderGroup->updated_at,
             ])
-                ->count(rand(1, 3))
+                ->count(rand(2, 5))
                 ->make();
 
             foreach ($orders as $order) {
-                //ensure that shop has product before execute
+                // Ensure that shop has product before execution
                 $shop = Shop::whereHas('products')->inRandomOrder()->first();
                 $order->shop_id = $shop->id;
                 $order->order_group_id = $orderGroup->id;
+
+                // Determine order status based on orderGroup status
+                if ($orderGroup->status === OrderGroupStatus::Verified && $orderGroup->payment_status === PaymentStatus::Completed) {
+                    $order->status = $this->faker->randomElement([OrderStatus::Processing, OrderStatus::Shipped, OrderStatus::Delivered]);
+                } else if ($orderGroup->status === OrderGroupStatus::Cancelled) {
+                    $order->status = OrderStatus::Cancelled;
+                }else if ($orderGroup->status === OrderGroupStatus::Refunded){
+                    $order->status =OrderStatus::Refunded;
+                }
+                 else {
+                    $order->status = OrderStatus::New;
+                }
+
                 $order->save();
 
                 $orderItems = OrderItem::factory([

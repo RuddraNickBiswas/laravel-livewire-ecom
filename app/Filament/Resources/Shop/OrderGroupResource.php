@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Shop;
 
+use App\Enums\OrderGroupStatus;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Filament\Resources\Shop\OrderGroupResource\Pages;
@@ -11,6 +12,7 @@ use App\Models\Shop\OrderCity;
 use App\Models\Shop\OrderGroup;
 use Filament\Actions\Action;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
@@ -23,8 +25,11 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Collection;
 
@@ -32,8 +37,10 @@ class OrderGroupResource extends Resource
 {
     protected static ?string $model = OrderGroup::class;
 
+    protected static ?string $recordTitleAttribute = 'invoice_id';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+        protected static ?string $navigationGroup = 'Orders';
     public static function form(Form $form): Form
     {
 
@@ -75,15 +82,23 @@ class OrderGroupResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('invoice_id')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
+                    Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->searchable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault:false),
                 Tables\Columns\TextColumn::make('phone')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault:false),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->toggleable(isToggledHiddenByDefault:false)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_price')
                     ->numeric()
@@ -92,23 +107,29 @@ class OrderGroupResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deliveryDistrict.name')
-                    ->numeric()
+                    ->toggleable(isToggledHiddenByDefault:true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deliveryCity.name')
-                    ->numeric()
+                ->toggleable(isToggledHiddenByDefault:true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('delivery_address')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('payment_method')
+                    ->toggleable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('payment_status'),
+                Tables\Columns\TextColumn::make('payment_status')
+                ->badge()
+                ->sortable(),
                 Tables\Columns\TextColumn::make('transaction_id')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('currency_code')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('payment_approve_date')
                     ->dateTime()
+                    ->toggleable(isToggledHiddenByDefault:true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -120,7 +141,45 @@ class OrderGroupResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Filter::make('price')
+                    ->form([
+                        TextInput::make('price_min')
+                            ->numeric(),
+                        TextInput::make('price_max')
+                            ->numeric(),
+                    ])
+                    ->query(
+                        function (Builder $query, array $data): Builder {
+                            return $query
+                                ->when($data['price_min'], fn (Builder $query, $price): Builder => $query->where('total_price', '>=', $price))
+                                ->when($data['price_max'], fn (Builder $query, $price): Builder => $query->where('total_price', '<=', $price));
+                        }
+                    ),
+
+                    SelectFilter::make('status')
+                        ->options(OrderGroupStatus::class),
+
+                // Filter::make('status')
+                //     ->form([
+                //         Select::make('status')
+                //             ->options(OrderGroupStatus::class)
+                //     ]),
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -148,7 +207,31 @@ class OrderGroupResource extends Resource
         ];
     }
 
+    public static function getWidgets(): array
+    {
+        return [
+            OrderGroupResource\Widgets\StatsOrderGroupOverview::class,
+        ];
+    }
 
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Total Price' => $record->total_price,
+            'Owner' => $record->user->name,
+        ];
+    }
+
+
+
+    public static function getNavigationBadge(): ?string
+    {
+        /** @var class-string<Model> $modelClass */
+        $modelClass = static::$model;
+
+        return (string) $modelClass::where('status', 'new')->count();
+    }
 
 
 
@@ -182,7 +265,7 @@ class OrderGroupResource extends Resource
                 ])->columns(2)->columnSpanFull(),
             ToggleButtons::make('status')
                 ->inline()
-                ->options(OrderStatus::class)
+                ->options(OrderGroupStatus::class)
                 ->required()
                 ->columnSpanFull(),
             Section::make('User Information')
@@ -262,5 +345,9 @@ class OrderGroupResource extends Resource
                 ->columnSpan('full'),
         ];
     }
+
+
+
+
 
 }

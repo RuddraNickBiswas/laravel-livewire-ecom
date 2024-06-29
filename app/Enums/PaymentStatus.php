@@ -12,7 +12,6 @@ enum PaymentStatus: string implements HasColor, HasIcon, HasLabel
 
     case Completed = 'completed';
 
-    case Verified = 'verified' ;
 
     case Failed = 'failed';
 
@@ -24,7 +23,6 @@ enum PaymentStatus: string implements HasColor, HasIcon, HasLabel
         return match($this){
             self::Incomplete => "Incomplete",
             self::Completed => "Completed",
-            self::Verified => "Verified",
             self::Failed => "Failed",
             self::Refunded => "Refunded",
         };
@@ -35,7 +33,6 @@ enum PaymentStatus: string implements HasColor, HasIcon, HasLabel
         return match($this){
             self::Incomplete => "warning",
             self::Completed => "info",
-            self::Verified => "success",
             self::Failed => "danger",
             self::Refunded => "success",
         };
@@ -46,7 +43,6 @@ enum PaymentStatus: string implements HasColor, HasIcon, HasLabel
         return match($this){
             self::Incomplete => "heroicon-m-exclamation-triangle",
             self::Completed => "heroicon-m-check-circle",
-            self::Verified => "heroicon-m-check-badge",
             self::Failed => "heroicon-m-x-circle",
             self::Refunded => 'heroicon-m-arrow-path',
         };

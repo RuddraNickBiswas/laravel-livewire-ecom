@@ -2,6 +2,7 @@
 
 namespace App\Models\Shop;
 
+use App\Enums\OrderGroupStatus;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Models\User;
@@ -19,6 +20,7 @@ class OrderGroup extends Model
     {
         return [
             'payment_status' => PaymentStatus::class,
+            'status' => OrderGroupStatus::class,
         ];
     }
 

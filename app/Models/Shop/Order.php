@@ -47,7 +47,7 @@ class Order extends Model
 
         public function shop()
         {
-            return $this->belongsTo(Shop::class);
+            return $this->belongsTo(Shop::class, 'shop_id');
         }
 
         public function orderGroup()
