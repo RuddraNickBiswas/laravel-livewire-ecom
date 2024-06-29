@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\Shop\Widgets;
 
-use App\Filament\Resources\Shop\OrderResource;
+use App\Filament\Shop\Resources\OrderResource;
 use App\Models\Shop\Order;
-use App\Models\Shop\OrderGroup;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
 
-class LatestOrdersAdminTable extends BaseWidget
+class LatestOrderShopTable extends BaseWidget
 {
 
     protected static ?int $sort = 4;
@@ -24,7 +23,7 @@ class LatestOrdersAdminTable extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(Order::query())
+            ->query(Order::query()->whereBelongsTo(Filament::getTenant()))
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('orderGroup.invoice_id')
@@ -151,11 +150,6 @@ class LatestOrdersAdminTable extends BaseWidget
                 Tables\Actions\EditAction::make()->url(fn ($record) => OrderResource::getUrl('edit', ['record' => $record]))
                     ->openUrlInNewTab()
             ])
-          ->groups([
-                Tables\Grouping\Group::make('orderGroup.invoice_id')
-                    ->collapsible(),
-            ])->defaultGroup('orderGroup.invoice_id')
-
             ->paginated(5);
     }
 

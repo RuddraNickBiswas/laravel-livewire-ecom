@@ -23,12 +23,12 @@ return new class extends Migration
             $table->unsignedBigInteger("delivery_district_id");
             $table->unsignedBigInteger("delivery_city_id");
             $table->string("delivery_address");
-            $table->string('payment_method');
-            $table->enum('payment_status', ['incomplete', 'completed', 'failed', 'refunded', 'verified'])->default('incomplete');
+            $table->string('payment_method')->nullable();
+            $table->enum('payment_status', ['incomplete', 'completed', 'failed', 'refunded'])->default('incomplete');
             $table->string('transaction_id')->nullable();
             $table->string('currency_code')->nullable();
             $table->text('notes')->nullable();
-            $table->enum('status', ['new', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded'])->default('new');
+            $table->enum('status', ['new','verified', 'cancelled', 'refunded',])->default('new');
             $table->timestamp('payment_approve_date')->nullable();
             $table->timestamps();
 

@@ -30,7 +30,7 @@ class Product extends Model
 
     public function shop()
     {
-        return $this->belongsTo(User::class, 'shop_id');
+        return $this->belongsTo(Shop::class, 'shop_id');
     }
 
 

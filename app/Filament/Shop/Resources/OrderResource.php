@@ -1,53 +1,48 @@
 <?php
 
-namespace App\Filament\Resources\Shop;
+namespace App\Filament\Shop\Resources;
 
 use App\Enums\OrderStatus;
-use App\Enums\PaymentStatus;
-use App\Filament\Resources\Shop\OrderResource\Pages;
-use App\Filament\Resources\Shop\OrderResource\RelationManagers;
+use App\Filament\Shop\Resources\OrderResource\Pages;
+use App\Filament\Shop\Resources\OrderResource\RelationManagers;
 use App\Models\Shop\Order;
 use App\Models\Shop\Product;
+use App\Models\Shop\ProductVariant;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use App\Forms\Components\AddressForm;
-use App\Models\Shop\OrderCity;
-use App\Models\Shop\ProductVariant;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
+use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Resources\Resource;
+use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Collection;
 
 class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
+    protected static ?string $recordTitleAttribute = 'orderGroup.invoice_id';
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
 
-    protected static ?string $navigationGroup = 'Orders';
-
+    protected static ?string $navigationGroup = 'Ecommarce Management';
     // protected static ?string $navigationParentItem = 'Order Group';
 
-    // protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -116,7 +111,7 @@ class OrderResource extends Resource
                     TextColumn::make('shop.name')
                     // ->label(_('Creator Name'))
                     ->searchable()
-                    ->toggleable()
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
                 TextColumn::make('orderGroup.email')
                     ->label(__('Email'))
@@ -128,6 +123,12 @@ class OrderResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('status')
                     ->badge()
+                    ->searchable()
+                    ->toggleable(),
+                    TextColumn::make('orderGroup.payment_status')
+                    ->label(__('Payment Status'))
+                    ->badge()
+                    ->sortable()
                     ->searchable()
                     ->toggleable(),
                 TextColumn::make('total_price')
@@ -160,11 +161,7 @@ class OrderResource extends Resource
                 TextColumn::make('payment_method')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('orderGroup.payment_status')
-                    ->label(__('Payment Status'))
-                    ->badge()
-                    ->searchable()
-                    ->toggleable(),
+
                 TextColumn::make('orderGroup.transaction_id')
                     ->label(__('Transaction_id'))
                     ->searchable()
@@ -230,16 +227,12 @@ class OrderResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ])->groups([
-                Tables\Grouping\Group::make('orderGroup.invoice_id')
-                    ->collapsible(),
-            ])->defaultGroup('orderGroup.invoice_id');
+            ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            RelationManagers\OrderGroupRelationManager::class
         ];
     }
 
@@ -268,16 +261,17 @@ class OrderResource extends Resource
         return parent::getEloquentQuery()->withoutGlobalScope(SoftDeletingScope::class);
     }
 
-    // public static function getGloballySearchableAttributes(): array
-    // {
-    //     return ['number', 'customer.name'];
-    // }
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['orderGroup.phone', 'orderGroup.email', 'orderGroup.name'];
+    }
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
+            'Invoice' => $record->orderGroup->invoice_id,
+            'Creator' => $record->orderGroup->name,
             'Total Price' => $record->total_price,
-            'Owner' => $record->owner->name,
         ];
     }
 
@@ -292,7 +286,7 @@ class OrderResource extends Resource
         /** @var class-string<Model> $modelClass */
         $modelClass = static::$model;
 
-        return (string) $modelClass::where('status', 'new')->count();
+        return (string) $modelClass::whereBelongsTo(Filament::getTenant())->where('status', 'new')->count();
     }
 
 
