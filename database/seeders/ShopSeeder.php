@@ -41,6 +41,7 @@ class ShopSeeder extends Seeder
             if ($user) {
                 $user->shops()->attach($shop->id);
             }
+            $shop->appearance()->create();
         }
     }
 }

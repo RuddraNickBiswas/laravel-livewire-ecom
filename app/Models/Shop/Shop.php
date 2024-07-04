@@ -2,11 +2,13 @@
 
 namespace App\Models\Shop;
 
+use App\Models\Setting\Appearance;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Shop extends Model
 {
@@ -28,5 +30,10 @@ class Shop extends Model
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function appearance() :HasOne
+    {
+        return $this->hasOne(Appearance::class);
     }
 }
