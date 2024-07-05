@@ -4,7 +4,6 @@ namespace App\Filament\Shop\Resources;
 
 use App\Enums\OrderStatus;
 use App\Filament\Shop\Resources\OrderResource\Pages;
-use App\Filament\Shop\Resources\OrderResource\RelationManagers;
 use App\Models\Shop\Order;
 use App\Models\Shop\Product;
 use App\Models\Shop\ProductVariant;
@@ -61,13 +60,13 @@ class OrderResource extends Resource
                                     ->modalDescription('All existing items will be removed from the order.')
                                     ->requiresConfirmation()
                                     ->color('danger')
-                                    ->action(fn (Forms\Set $set) => $set('orderItems', [])),
+                                    ->action(fn(Forms\Set $set) => $set('orderItems', [])),
                             ])
                             ->schema([
                                 static::getItemsRepeater(),
                             ]),
                     ])
-                    ->columnSpan(['lg' => fn (?Order $record) => $record === null ? 4 : 3]),
+                    ->columnSpan(['lg' => fn(?Order $record) => $record === null ? 4 : 3]),
 
                 Forms\Components\Section::make()
                     ->schema([
@@ -76,21 +75,19 @@ class OrderResource extends Resource
                             ->schema([
                                 Forms\Components\Placeholder::make('created_at')
                                     ->label('Created at')
-                                    ->content(fn (Order $record): ?string => $record->created_at?->diffForHumans()),
+                                    ->content(fn(Order $record): ?string => $record->created_at?->diffForHumans()),
 
                                 Forms\Components\Placeholder::make('updated_at')
                                     ->label('Last modified at')
-                                    ->content(fn (Order $record): ?string => $record->updated_at?->diffForHumans()),
+                                    ->content(fn(Order $record): ?string => $record->updated_at?->diffForHumans()),
                             ])
                     ])
                     ->columnSpan(['lg' => 1])
-                    ->hidden(fn (?Order $record) => $record === null),
+                    ->hidden(fn(?Order $record) => $record === null),
 
             ])
             ->columns(4);
     }
-
-
 
 
     // Forms\Components\DateTimePicker::make('payment_approve_date'),
@@ -99,16 +96,16 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('orderGroup.invoice_id')
-                    ->label(_('Invoice'))
+                    ->label(__('Invoice'))
                     ->searchable()
                     ->toggleable(),
 
                 TextColumn::make('orderGroup.name')
-                    ->label(_('Creator Name'))
+                    ->label(__('Creator Name'))
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
-                    TextColumn::make('shop.name')
+                TextColumn::make('shop.name')
                     // ->label(_('Creator Name'))
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true)
@@ -125,7 +122,7 @@ class OrderResource extends Resource
                     ->badge()
                     ->searchable()
                     ->toggleable(),
-                    TextColumn::make('orderGroup.payment_status')
+                TextColumn::make('orderGroup.payment_status')
                     ->label(__('Payment Status'))
                     ->badge()
                     ->sortable()
@@ -199,8 +196,8 @@ class OrderResource extends Resource
                     ->query(
                         function (Builder $query, array $data): Builder {
                             return $query
-                                ->when($data['price_min'], fn (Builder $query, $price): Builder => $query->where('total_price', '>=', $price))
-                                ->when($data['price_max'], fn (Builder $query, $price): Builder => $query->where('total_price', '<=', $price));
+                                ->when($data['price_min'], fn(Builder $query, $price): Builder => $query->where('total_price', '>=', $price))
+                                ->when($data['price_max'], fn(Builder $query, $price): Builder => $query->where('total_price', '<=', $price));
                         }
                     ),
                 Filter::make('created_at')
@@ -212,11 +209,11 @@ class OrderResource extends Resource
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
                             )
                             ->when(
                                 $data['created_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
                     }),
             ])
@@ -242,7 +239,6 @@ class OrderResource extends Resource
             OrderResource\Widgets\StatsOrdersOverview::class,
         ];
     }
-
 
 
     public static function getPages(): array
@@ -286,9 +282,8 @@ class OrderResource extends Resource
         /** @var class-string<Model> $modelClass */
         $modelClass = static::$model;
 
-        return (string) $modelClass::whereBelongsTo(Filament::getTenant())->where('status', 'new')->count();
+        return (string)$modelClass::whereBelongsTo(Filament::getTenant())->where('status', 'new')->count();
     }
-
 
 
     /** @return Forms\Components\Component[] */
@@ -350,7 +345,6 @@ class OrderResource extends Resource
                     ->numeric()
                     ->default(1)
                     ->live()
-
                     ->columnSpan([
                         'md' => 2,
                     ])
@@ -366,7 +360,6 @@ class OrderResource extends Resource
                         'md' => 3,
                     ]),
                 Repeater::make('options')
-
                     ->schema([
                         Select::make('variant_name')
                             ->label('Variant')
@@ -423,7 +416,7 @@ class OrderResource extends Resource
 
                         return ProductResource::getUrl('edit', ['record' => $product]);
                     }, shouldOpenInNewTab: true)
-                    ->hidden(fn (array $arguments, Repeater $component): bool => blank($component->getRawItemState($arguments['item'])['product_id'])),
+                    ->hidden(fn(array $arguments, Repeater $component): bool => blank($component->getRawItemState($arguments['item'])['product_id'])),
             ])
             // ->orderColumn('sort')
             ->defaultItems(1)

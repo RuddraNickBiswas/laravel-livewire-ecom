@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 11.11.1.
+ * Generated for Laravel 11.13.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -18911,8 +18911,8 @@ namespace BezhanSalleh\PanelSwitch\Facades {
                     /**
          * Call the given Closure with this instance then return the instance.
          *
-         * @param callable|null $callback
-         * @return $this|\Illuminate\Support\HigherOrderTapProxy 
+         * @param \Filament\Support\Components\(callable($this):  mixed)|null  $callback
+         * @return \Filament\Support\Components\($callback is null ? \Illuminate\Support\HigherOrderTapProxy : $this)
          * @static 
          */        public static function tap($callback = null)
         {            //Method inherited from \Filament\Support\Components\Component         
@@ -19789,8 +19789,8 @@ namespace Illuminate\Database\Eloquent\Relations {
                     /**
          * 
          *
+         * @param \Illuminate\Database\Eloquent\Model|array $model
          * @see \Kirschbaum\PowerJoins\Mixins\RelationshipsExtraMethods::usesSoftDeletes()
-         * @param mixed $model
          * @static 
          */        public static function usesSoftDeletes($model)
         {
@@ -23321,7 +23321,7 @@ namespace  {
                             /**
              * Pass the query to a given callback.
              *
-             * @param callable $callback
+             * @param \Illuminate\Database\Eloquent\callable($this):  mixed  $callback
              * @return \Illuminate\Database\Eloquent\Builder|static 
              * @static 
              */            public static function tap($callback)
@@ -24204,6 +24204,15 @@ namespace  {
              */            public static function getGroupBy()
             {
                                 return \Illuminate\Database\Eloquent\Builder::getGroupBy();
+            }
+                            /**
+             * 
+             *
+             * @see \Kirschbaum\PowerJoins\Mixins\QueryRelationshipExistence::getScopes()
+             * @static 
+             */            public static function getScopes()
+            {
+                                return \Illuminate\Database\Eloquent\Builder::getScopes();
             }
                             /**
              * 

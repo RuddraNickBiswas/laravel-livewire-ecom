@@ -104,17 +104,17 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('orderGroup.invoice_id')
-                    ->label(_('Invoice'))
+                    ->label(__('Invoice'))
                     ->searchable()
                     ->toggleable(),
 
                 TextColumn::make('orderGroup.name')
-                    ->label(_('Creator Name'))
+                    ->label(__('Creator Name'))
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
                     TextColumn::make('shop.name')
-                    // ->label(_('Creator Name'))
+                    // ->label(__('Creator Name'))
                     ->searchable()
                     ->toggleable()
                     ->sortable(),

@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Shop;
 
+use App\Models\Shop\Shop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,5 +21,13 @@ class ShopFactory extends Factory
             'name' => fake()->word(),
             'slug' => fake()->slug(),
         ];
+    }
+
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Shop $shop) {
+            $shop->appearance()->create();
+        });
     }
 }
