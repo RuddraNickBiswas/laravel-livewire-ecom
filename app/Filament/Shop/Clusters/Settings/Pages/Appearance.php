@@ -18,24 +18,29 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\Page;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Exceptions\Halt;
 use Livewire\Attributes\Locked;
 
 /**
  * @property Form $form
  */
-
 class Appearance extends Page
 {
     use InteractsWithFormActions;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-paint-brush';
 
     protected static ?string $title = 'Appearance';
+
     protected static string $view = 'filament.shop.clusters.settings.pages.appearance';
 
     protected static ?string $cluster = Settings::class;
 
+    public function getMaxContentWidth(): MaxWidth
+    {
+        return MaxWidth::ScreenTwoExtraLarge;
+    }
 
     public ?array $data = [];
 
@@ -51,13 +56,6 @@ class Appearance extends Page
         //have some problem when it dosen't have any appearance created
         // $this->record->save();\
 
-       $panel = Filament::getCurrentPanel();
-       $panel
-        ->colors([
-            'primary' => \Filament\Support\Colors\Color::Gray,
-        ]);
-
-    //    dd($panel);
         $this->fillForm();
         // dd($this->record);
 
@@ -66,8 +64,6 @@ class Appearance extends Page
     public function fillForm(): void
     {
         $data = $this->record->attributesToArray();
-
-        // dd($data);
         $this->form->fill($data);
 
     }
@@ -85,15 +81,40 @@ class Appearance extends Page
 
         $this->getSavedNotification()->send();
     }
+
+
+    public function setDefaultSettings(): void
+    {
+        try {
+
+//            $data = $this->form->getState();
+            $this->form->fill([
+                'primary_color' => PrimaryColor::DEFAULT,
+                'bg_color' => PrimaryColor::Gray,
+                'font' => Font::DEFAULT,
+                'table_sort_direction' => TableSortDirection::DEFAULT,
+                'records_per_page' => RecordsPerPage::DEFAULT,
+
+            ]);
+        } catch (Halt $exception) {
+            return;
+        }
+
+        $this->getDefaultSettingsNotifications()->send();
+    }
+
     protected function getSavedNotification(): Notification
     {
         return Notification::make()
             ->success()
             ->title(__('filament-panels::resources/pages/edit-record.notifications.saved.title'));
     }
-
-
-
+    protected function getDefaultSettingsNotifications(): Notification
+    {
+        return Notification::make()
+            ->success()
+            ->title(__('Field Set with default setting'));
+    }
 
     public function form(Form $form): Form
     {
@@ -108,7 +129,7 @@ class Appearance extends Page
     }
 
 
-  protected function getGeneralSection(): Component
+    protected function getGeneralSection(): Component
     {
         return Section::make('General')
             ->schema([
@@ -117,8 +138,22 @@ class Appearance extends Page
                     ->native(false)
                     ->options(
                         collect(PrimaryColor::cases())
-                            ->sort(static fn ($a, $b) => $a->value <=> $b->value)
-                            ->mapWithKeys(static fn ($case) => [
+                            ->sort(static fn($a, $b) => $a->value <=> $b->value)
+                            ->mapWithKeys(static fn($case) => [
+                                $case->value => "<span class='flex items-center gap-x-4'>
+                                <span class='rounded-full w-4 h-4' style='background:rgb(" . $case->getColor()[600] . ")'></span>
+                                <span>" . $case->getLabel() . '</span>
+                                </span>',
+                            ]),
+                    ),
+
+                Select::make('bg_color')
+                    ->allowHtml()
+                    ->native(false)
+                    ->options(
+                        collect(PrimaryColor::cases())
+                            ->sort(static fn($a, $b) => $a->value <=> $b->value)
+                            ->mapWithKeys(static fn($case) => [
                                 $case->value => "<span class='flex items-center gap-x-4'>
                                 <span class='rounded-full w-4 h-4' style='background:rgb(" . $case->getColor()[600] . ")'></span>
                                 <span>" . $case->getLabel() . '</span>
@@ -130,7 +165,7 @@ class Appearance extends Page
                     ->native(false)
                     ->options(
                         collect(Font::cases())
-                            ->mapWithKeys(static fn ($case) => [
+                            ->mapWithKeys(static fn($case) => [
                                 $case->value => "<span style='font-family:{$case->getLabel()}'>{$case->getLabel()}</span>",
                             ]),
                     ),
@@ -155,6 +190,7 @@ class Appearance extends Page
 
         $keysToWatch = [
             'primary_color',
+            'bg_color',
             'font',
         ];
 
@@ -168,13 +204,12 @@ class Appearance extends Page
     }
 
 
-      /**
-     * @return array<Action | ActionGroup>
-     */
+
     protected function getFormActions(): array
     {
         return [
             $this->getSaveFormAction(),
+            $this->getDefaultSettingsFormAction(),
         ];
     }
 
@@ -184,6 +219,14 @@ class Appearance extends Page
             ->label(__('filament-panels::resources/pages/edit-record.form.actions.save.label'))
             ->submit('save')
             ->keyBindings(['mod+s']);
+    }
+
+    protected function getDefaultSettingsFormAction(): Action
+    {
+        return Action::make('setDefaultSettings')
+            ->label(__('Default Default'))
+            ->action( fn() => $this->setDefaultSettings());
+//            ->submit('setDefaultSettings');
     }
 
 }

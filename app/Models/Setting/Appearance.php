@@ -9,6 +9,7 @@ use App\Enums\Setting\TableSortDirection;
 use App\Models\Shop\Shop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Appearance extends Model
 {
@@ -19,6 +20,7 @@ class Appearance extends Model
     protected $fillable = [
         'company_id',
         'primary_color',
+        'bg_color',
         'font',
         'table_sort_direction',
         'records_per_page',
@@ -38,7 +40,7 @@ class Appearance extends Model
     }
 
 
-    public function shop()
+    public function shop() :BelongsTo
     {
         return $this->belongsTo(Shop::class, 'shop_id');
     }

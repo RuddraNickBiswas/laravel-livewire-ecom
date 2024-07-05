@@ -42,8 +42,7 @@ class ShopPanelProvider extends PanelProvider
             ])
             ->discoverClusters(in: app_path('Filament/Shop/Clusters'), for: 'App\\Filament\\Shop\\Clusters')
             ->discoverWidgets(in: app_path('Filament/Shop/Widgets'), for: 'App\\Filament\\Shop\\Widgets')
-            ->widgets([
-            ])
+            ->widgets([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -59,13 +58,13 @@ class ShopPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])->plugins([
-
-            ])->tenant(Shop::class, ownershipRelationship: "shop" ,slugAttribute:'slug')
+            ])->tenant(Shop::class, ownershipRelationship: "shop", slugAttribute: 'slug')
             ->tenantRegistration(RegisterShop::class)
             ->tenantProfile(EditShopProfile::class)
             ->tenantMiddleware([
                 ConfigureCurrentShop::class,
-            ]);
+            ])
+            ->viteTheme('resources/css/filament/shop/theme.css')
+            ->plugins([]);
     }
 }
