@@ -43,13 +43,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Check if categories are seeded correctly
-        $this->seedWithProgress(Product::class, 500, function () {
+        $this->seedWithProgress(Product::class, 50, function () {
             return Product::factory()->withLongDescription()->withCategories()->withVariants();
         });
 
 
 
-        $this->seedWithProgress(OrderGroup::class, 1000, function () {
+        $this->seedWithProgress(OrderGroup::class, 100, function () {
             return OrderGroup::factory();
         });
 

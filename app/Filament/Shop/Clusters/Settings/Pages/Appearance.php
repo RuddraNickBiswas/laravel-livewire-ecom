@@ -51,7 +51,7 @@ class Appearance extends Page
     {
         $tenant = Filament::getTenant();
         $this->record = AppearanceModel::whereBelongsTo(Filament::getTenant())->firstOrNew([
-            'shop_id' => $tenant->id
+            'panel_id' => $tenant->id
         ]);
         //have some problem when it dosen't have any appearance created
         // $this->record->save();\

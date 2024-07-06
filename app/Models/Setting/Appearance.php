@@ -42,7 +42,7 @@ class Appearance extends Model
 
     public function shop() :BelongsTo
     {
-        return $this->belongsTo(Shop::class, 'shop_id');
+        return $this->belongsTo(Shop::class, 'panel_id');
     }
 
 

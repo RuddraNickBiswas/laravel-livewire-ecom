@@ -17,7 +17,7 @@ return new class extends Migration
     {
         Schema::create('appearances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('shop_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('panel_id');
             $table->string('primary_color')->default(PrimaryColor::DEFAULT);
             $table->string('bg_color')->default(PrimaryColor::Gray);
             $table->string('font')->default(Font::DEFAULT);

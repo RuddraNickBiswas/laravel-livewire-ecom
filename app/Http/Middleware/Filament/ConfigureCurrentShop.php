@@ -22,8 +22,9 @@ class ConfigureCurrentShop
     public function handle(Request $request, Closure $next): Response
     {
 
-          /** @var Shop $company */
-          $shop = Filament::getTenant();
+        /** @var Shop $shop */
+        $shop = Filament::getTenant();
+         /* dd( $shop->appearance->records_per_page->value );*/
         if($shop){
             ShopConfigured::dispatch($shop);
         }
