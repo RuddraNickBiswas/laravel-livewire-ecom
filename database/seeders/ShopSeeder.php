@@ -6,6 +6,7 @@ use App\Models\Shop\Shop;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ShopSeeder extends Seeder
 {
@@ -33,14 +34,13 @@ class ShopSeeder extends Seeder
         foreach ($shops as $shopData) {
             $shop = Shop::create([
                 'name' => $shopData['name'],
-                'slug' => \Str::slug($shopData['name']),
+                'slug' => Str::slug($shopData['name']),
             ]);
 
             // Attach the shop to the user
             $user = User::find($shopData['user_id']);
-            if ($user) {
-                $user->shops()->attach($shop->id);
-            }
+            $user?->shops()->attach($shop->id);
+//            $shop->appearance()->create();
         }
     }
 }

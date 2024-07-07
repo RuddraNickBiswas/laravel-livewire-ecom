@@ -20,8 +20,8 @@ return new class extends Migration
 
         Schema::create('shop_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('shop_id')->constrained('shops');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('shop_id')->constrained('shops')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

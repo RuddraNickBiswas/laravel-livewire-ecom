@@ -28,12 +28,12 @@ class LatestOrdersAdminTable extends BaseWidget
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('orderGroup.invoice_id')
-                    ->label(_('Invoice'))
+                    ->label(__('Invoice'))
                     ->searchable()
                     ->toggleable(),
 
                 TextColumn::make('orderGroup.name')
-                    ->label(_('Creator Name'))
+                    ->label(__('Creator Name'))
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
