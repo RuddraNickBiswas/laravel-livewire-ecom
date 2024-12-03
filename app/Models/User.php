@@ -83,7 +83,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     {
         return match ((string)$this->role) {
             'user' => 'home',
-            'admin' => 'admin.dashboard',
+            'admin' => 'admin',
         };
     }
 

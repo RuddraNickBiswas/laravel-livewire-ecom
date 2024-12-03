@@ -18,10 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
         //     ->name('admin.')
         //     ->group(base_path('routes/admin.php'));
         // }
+
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'applyFnLayout' => \App\Http\Middleware\Livewire\ApplyFnLayoutMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

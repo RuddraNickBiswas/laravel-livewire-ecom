@@ -13,6 +13,8 @@ return [
         'cluster' => null,
     ],
 
+    'tenant_model' => null,
+
     'auth_provider_model' => [
         'fqcn' => 'App\\Models\\User',
     ],
@@ -25,14 +27,8 @@ return [
     ],
 
     'panel_user' => [
-        'enabled' => false,
-        'name' => 'panel_user',
-    ],
-
-
-    'shop_user' => [
         'enabled' => true,
-        'name' => 'shop_user',
+        'name' => 'panel_user',
     ],
 
     'permission_prefixes' => [
